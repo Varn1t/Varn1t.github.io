@@ -29,6 +29,6 @@ Recruiters and hiring managers from tech companies, startups, and research labs 
 - [ ] All 5+ projects are displayed with descriptions and tool links
 - [ ] Skills section shows tech stack with visual treatment
 - [ ] Education timeline is present
-- [ ] Contact section with email
+- [ ] Contact section with email, github, linkedIN
 - [ ] Smooth animations and scroll effects work
 - [ ] Mobile responsive layout
