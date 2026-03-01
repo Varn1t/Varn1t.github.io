@@ -1,0 +1,15 @@
+# GSD / Agent config — not needed in public repo
+.gsd/
+.agent/
+.gemini/
+adapters/
+docs/
+scripts/
+.vscode/
+PROJECT_RULES.md
+GSD-STYLE.md
+model_capabilities.yaml
+
+# OS
+.DS_Store
+Thumbs.db
