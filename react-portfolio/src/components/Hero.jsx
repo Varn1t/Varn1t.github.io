@@ -139,7 +139,7 @@ const Hero = () => {
                 >
                     <span className="static-text">I'm a </span>
                     <span className="typed-text" id="typedText">{typedText}</span>
-                    <span className="cursor-blink">|</span>
+                    <span className="cursor-blink"></span>
                 </motion.div>
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
@@ -186,12 +186,7 @@ const Hero = () => {
                     </div>
                 </motion.div>
             </div>
-            <div className="scroll-indicator">
-                <div className="scroll-mouse">
-                    <div className="scroll-wheel"></div>
-                </div>
-                <span>Scroll to explore</span>
-            </div>
+
         </section>
     );
 };
