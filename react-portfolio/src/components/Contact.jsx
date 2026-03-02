@@ -10,16 +10,39 @@ const Contact = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
-        // Simulate form submission
-        setTimeout(() => {
+        setStatus(null);
+
+        try {
+            const formDataToSubmit = new FormData();
+            formDataToSubmit.append("access_key", import.meta.env.VITE_WEB3FORMS_ACCESS_KEY);
+            formDataToSubmit.append("name", formData.name);
+            formDataToSubmit.append("email", formData.email);
+            formDataToSubmit.append("message", formData.message);
+
+            const response = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                body: formDataToSubmit
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                setStatus('success');
+                setFormData({ name: '', email: '', message: '' });
+            } else {
+                console.error("Error", data);
+                setStatus('error');
+            }
+        } catch (error) {
+            console.error("Submission failed", error);
+            setStatus('error');
+        } finally {
             setIsSubmitting(false);
-            setStatus('success');
-            setFormData({ name: '', email: '', message: '' });
             setTimeout(() => setStatus(null), 5000);
-        }, 1500);
+        }
     };
 
     return (
@@ -127,6 +150,11 @@ const Contact = () => {
                         {status === 'success' && (
                             <p style={{ color: 'var(--accent)', fontSize: '0.9rem', textAlign: 'center', marginTop: '1rem' }}>
                                 Message sent successfully!
+                            </p>
+                        )}
+                        {status === 'error' && (
+                            <p style={{ color: '#ef4444', fontSize: '0.9rem', textAlign: 'center', marginTop: '1rem' }}>
+                                Oops! Something went wrong. Please try again.
                             </p>
                         )}
                     </motion.form>
