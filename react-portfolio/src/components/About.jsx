@@ -86,14 +86,14 @@ const SyntaxHighlighter = ({ content, lang }) => {
 
         if (lang === 'javascript') {
             let parsed = line
-                .replace(/'([^']+)'/g, "§§§STR$1§§§")
-                .replace(/\b(import|from|const|new|export|default)\b/g, "§§§KW$1§§§")
-                .replace(/\b([A-Z][a-zA-Z0-9_]*)\b/g, "§§§CLS$1§§§");
+                .replace(/(['"])(.*?)\1/g, "__STR__$2__STR__")
+                .replace(/\b(import|from|const|new|export|default|let|var|if|else|return|class|function|async|await|try|catch|finally|throw|extends|super)\b/g, "__KW__$1__KW__")
+                .replace(/\b([A-Z][a-zA-Z0-9_]*)\b/g, "__CLS__$1__CLS__");
 
             parsed = parsed
-                .replace(/§§§STR(.*?)§§§/g, "<span class='token-string'>'$1'</span>")
-                .replace(/§§§KW(.*?)§§§/g, '<span class="token-keyword">$1</span>')
-                .replace(/§§§CLS(.*?)§§§/g, '<span class="token-class">$1</span>');
+                .replace(/__STR__(.*?)__STR__/g, '<span class="token-string">\'$1\'</span>')
+                .replace(/__KW__(.*?)__KW__/g, '<span class="token-keyword">$1</span>')
+                .replace(/__CLS__(.*?)__CLS__/g, '<span class="token-class">$1</span>');
 
             return (
                 <div key={index} className="ide-line">
@@ -105,14 +105,14 @@ const SyntaxHighlighter = ({ content, lang }) => {
 
         if (lang === 'python') {
             let parsed = line
-                .replace(/"([^"]+)"/g, "§§§STR$1§§§")
-                .replace(/\b(class|def|return)\b/g, "§§§KW$1§§§")
-                .replace(/\b([a-zA-Z_]\w*)(?=\()/g, "§§§METH$1§§§");
+                .replace(/(['"])(.*?)\1/g, "__STR__$2__STR__")
+                .replace(/\b(class|def|return|if|else|elif|for|while|import|from|as|try|except|finally|with|lambda|yield|raise|pass|break|continue)\b/g, "__KW__$1__KW__")
+                .replace(/\b([a-zA-Z_]\w*)(?=\()/g, "__METH__$1__METH__");
 
             parsed = parsed
-                .replace(/§§§STR(.*?)§§§/g, '<span class="token-string">"$1"</span>')
-                .replace(/§§§KW(.*?)§§§/g, '<span class="token-keyword">$1</span>')
-                .replace(/§§§METH(.*?)§§§/g, '<span class="token-method">$1</span>');
+                .replace(/__STR__(.*?)__STR__/g, '<span class="token-string">"$1"</span>')
+                .replace(/__KW__(.*?)__KW__/g, '<span class="token-keyword">$1</span>')
+                .replace(/__METH__(.*?)__METH__/g, '<span class="token-method">$1</span>');
 
             return (
                 <div key={index} className="ide-line">
