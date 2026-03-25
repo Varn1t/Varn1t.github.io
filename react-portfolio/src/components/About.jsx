@@ -85,29 +85,39 @@ const SyntaxHighlighter = ({ content, lang }) => {
         }
 
         if (lang === 'javascript') {
+            let parsed = line
+                .replace(/'([^']+)'/g, "§§§STR$1§§§")
+                .replace(/\b(import|from|const|new|export|default)\b/g, "§§§KW$1§§§")
+                .replace(/\b([A-Z][a-zA-Z0-9_]*)\b/g, "§§§CLS$1§§§");
+
+            parsed = parsed
+                .replace(/§§§STR(.*?)§§§/g, "<span class='token-string'>'$1'</span>")
+                .replace(/§§§KW(.*?)§§§/g, '<span class="token-keyword">$1</span>')
+                .replace(/§§§CLS(.*?)§§§/g, '<span class="token-class">$1</span>');
+
             return (
                 <div key={index} className="ide-line">
                     <span className="line-num">{index + 1}</span>
-                    <span className="line-content" dangerouslySetInnerHTML={{
-                        __html: line
-                            .replace(/\b(import|from|const|new|export|default)\b/g, '<span class="token-keyword">$1</span>')
-                            .replace(/\b([A-Z][a-zA-Z0-9_]*)\b/g, '<span class="token-class">$1</span>')
-                            .replace(/'([^']+)'/g, "<span class='token-string'>'$1'</span>")
-                    }} />
+                    <span className="line-content" dangerouslySetInnerHTML={{ __html: parsed }} />
                 </div>
             );
         }
 
         if (lang === 'python') {
+            let parsed = line
+                .replace(/"([^"]+)"/g, "§§§STR$1§§§")
+                .replace(/\b(class|def|return)\b/g, "§§§KW$1§§§")
+                .replace(/\b([a-zA-Z_]\w*)(?=\()/g, "§§§METH$1§§§");
+
+            parsed = parsed
+                .replace(/§§§STR(.*?)§§§/g, '<span class="token-string">"$1"</span>')
+                .replace(/§§§KW(.*?)§§§/g, '<span class="token-keyword">$1</span>')
+                .replace(/§§§METH(.*?)§§§/g, '<span class="token-method">$1</span>');
+
             return (
                 <div key={index} className="ide-line">
                     <span className="line-num">{index + 1}</span>
-                    <span className="line-content" dangerouslySetInnerHTML={{
-                        __html: line
-                            .replace(/\b(class|def|return)\b/g, '<span class="token-keyword">$1</span>')
-                            .replace(/\b([a-zA-Z_]\w*)(?=\()/g, '<span class="token-method">$1</span>')
-                            .replace(/"([^"]+)"/g, '<span class="token-string">"$1"</span>')
-                    }} />
+                    <span className="line-content" dangerouslySetInnerHTML={{ __html: parsed }} />
                 </div>
             );
         }
