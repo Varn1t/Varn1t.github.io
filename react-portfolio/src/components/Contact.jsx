@@ -35,7 +35,7 @@ const Contact = () => {
     const [postCatchClicks, setPostCatchClicks] = useState(0);
     const containerRef = useRef(null);
 
-    const handleNoteHover = useCallback(() => {
+    const handleNoteHover = useCallback((e) => {
         if (caught) return;
         const newAttempts = attempts + 1;
         setAttempts(newAttempts);
@@ -43,6 +43,11 @@ const Contact = () => {
         // Let them catch it after 6+ attempts (random chance increases)
         if (newAttempts >= 6 && Math.random() < 0.35) {
             return; // Don't move — let them click
+        }
+
+        // Prevent default touch/tap behavior so it runs away instead of clicking
+        if (e && e.preventDefault) {
+            e.preventDefault();
         }
 
         // Move to a different random position
@@ -98,6 +103,7 @@ const Contact = () => {
                                     exit={{ opacity: 0, scale: 0.3, rotate: pos.rotate + 20 }}
                                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                                     onMouseEnter={handleNoteHover}
+                                    onTouchStart={handleNoteHover}
                                     onClick={handleNoteCatch}
                                 >
                                     <div className="note-paper">

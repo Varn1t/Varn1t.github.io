@@ -2247,9 +2247,27 @@ a { color: inherit; text-decoration: none; }
 
   .hero-title { font-size: clamp(2rem, 6vw, 3.5rem); }
 
-  .desk-obj { display: none; }
+  /* Keep desk objects visible but push them down/scale them */
+  .desk-obj { opacity: 0.7; }
+  .headphones-obj { width: 100px; top: 5%; right: 2%; }
+  .terminal-obj { width: 100px; bottom: 5%; left: -2%; top: auto; }
+  .coffee-obj { width: 60px; bottom: 5%; left: 30%; }
+  .chart-obj { width: 100px; bottom: 5%; right: 5%; }
+  .sticky-1 { width: 70px; top: 12%; left: 8%; }
+  .sticky-2 { width: 70px; top: 12%; right: 8%; left: auto; }
 
   .catch-zone { height: 320px; }
+
+  /* New Responsive Adds */
+  .ide-body { flex-direction: column; }
+  .ide-sidebar { width: 100%; border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+  
+  .radar-layout { flex-direction: column; gap: 2rem; }
+  .radar-hud { max-width: 100%; }
+
+  .projects-desktop { padding: 1.5rem; gap: 1.5rem; }
+  .crt-monitor { padding: 1rem; }
+  .crt-glass { padding: 1rem; height: 300px; font-size: 0.75rem; }
 }
 
 @media (max-width: 640px) {

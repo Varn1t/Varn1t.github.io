@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+# Local Presentation Notes
+HOW_IT_WORKS.md
