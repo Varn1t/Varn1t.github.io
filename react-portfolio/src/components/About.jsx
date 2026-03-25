@@ -168,11 +168,11 @@ const About = () => {
                     <div className="ide-body">
                         {/* Sidebar */}
                         <div className="ide-sidebar">
-                            <div className="sidebar-title">EXPLORER</div>
-                            <div className="folder">
+                            <div className="sidebar-title visible-desktop">EXPLORER</div>
+                            <div className="folder visible-desktop">
                                 <span className="folder-icon">📂</span> portfolio_src
                             </div>
-                            <ul className="file-list">
+                            <ul className="file-list mobile-scroll">
                                 {Object.keys(FILES).map(fileName => (
                                     <li
                                         key={fileName}
@@ -180,7 +180,7 @@ const About = () => {
                                         onClick={() => setActiveTab(fileName)}
                                     >
                                         <span className="file-icon">{FILES[fileName].icon}</span>
-                                        {fileName}
+                                        <span className="file-name-text">{fileName}</span>
                                     </li>
                                 ))}
                             </ul>

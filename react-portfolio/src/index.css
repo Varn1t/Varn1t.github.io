@@ -2248,19 +2248,26 @@ a { color: inherit; text-decoration: none; }
   .hero-title { font-size: clamp(2rem, 6vw, 3.5rem); }
 
   /* Keep desk objects visible but push them down/scale them */
-  .desk-obj { opacity: 0.7; }
-  .headphones-obj { width: 100px; top: 5%; right: 2%; }
-  .terminal-obj { width: 100px; bottom: 5%; left: -2%; top: auto; }
-  .coffee-obj { width: 60px; bottom: 5%; left: 30%; }
-  .chart-obj { width: 100px; bottom: 5%; right: 5%; }
-  .sticky-1 { width: 70px; top: 12%; left: 8%; }
-  .sticky-2 { width: 70px; top: 12%; right: 8%; left: auto; }
+  .desk-obj { opacity: 0.6; }
+  .headphones-obj { width: 80px; top: 10%; right: 5%; }
+  .terminal-obj { width: 80px; top: 15%; left: 5%; }
+  .coffee-obj { width: 40px; bottom: 10%; right: 10%; left: auto; }
+  .chart-obj { display: none; }
+  .sticky-1 { width: 60px; top: 25%; left: 8%; }
+  .sticky-2 { width: 60px; top: 25%; right: 8%; left: auto; }
 
   .catch-zone { height: 320px; }
 
   /* New Responsive Adds */
-  .ide-body { flex-direction: column; }
-  .ide-sidebar { width: 100%; border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+  .ide-body { flex-direction: column; min-height: auto; }
+  .ide-sidebar { 
+    width: 100%; 
+    border-right: none; 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 0.5rem 0;
+  }
+  .ide-editor { min-width: 0; }
+  .line-content { font-size: 0.8rem; }
   
   .radar-layout { flex-direction: column; gap: 2rem; }
   .radar-hud { max-width: 100%; }
@@ -2268,6 +2275,28 @@ a { color: inherit; text-decoration: none; }
   .projects-desktop { padding: 1.5rem; gap: 1.5rem; }
   .crt-monitor { padding: 1rem; }
   .crt-glass { padding: 1rem; height: 300px; font-size: 0.75rem; }
+
+  .visible-desktop { display: none; }
+  .file-list.mobile-scroll {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+  .file-item {
+    padding: 0.4rem 0.8rem !important;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.03);
+    white-space: nowrap;
+  }
+  .file-item.active::before {
+    display: none;
+  }
+  .file-item.active {
+    background: rgba(168, 85, 247, 0.2);
+  }
+  .editor-tabs { display: none; } /* Hide redundant tabs on mobile if using sidebar chips */
 }
 
 @media (max-width: 640px) {
@@ -2294,4 +2323,29 @@ a { color: inherit; text-decoration: none; }
 
   .footer-content { justify-content: center; text-align: center; }
   .footer-links { justify-content: center; }
+
+  /* Education Mobile Fixes */
+  .git-line { left: 15px; }
+  .git-commit { padding-left: 45px; margin-bottom: 2.5rem; }
+  .commit-dot { left: 8px; width: 14px; height: 14px; }
+  .sticky-note { padding: 1.25rem; transform: none !important; }
+  .sticky-note .tl-title { font-size: 1.1rem; }
+  .sticky-note .tl-stat-val { font-size: 1.2rem; }
+  .commit-message code { font-size: 0.75rem; padding: 0.5rem; }
+  .masking-tape { width: 80px; height: 18px; top: -8px; }
+
+  /* Projects Mobile Fixes */
+  .projects-desktop { padding: 1rem; border-radius: 10px; }
+  .floppy-desk-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0.75rem; }
+  .floppy-disk { width: 100px; height: 100px; }
+  .label-text { font-size: 0.7rem; margin-top: 4px; }
+  .floppy-shutter { height: 30px; }
+  .floppy-label-area { height: 50px; bottom: 10px; }
+
+  /* Touch enhancements */
+  .hero-cta:active, .contact-btn:active, .btn:active, .file-item:active {
+    transform: scale(0.95);
+    background: var(--accent);
+    color: white;
+  }
 }
