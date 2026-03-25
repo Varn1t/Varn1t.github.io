@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const Projects = () => {
+    const [activeProject, setActiveProject] = useState(0);
+    const [isBooting, setIsBooting] = useState(false);
+
     const projectsData = [
         {
-            title: "Smart Traffic Management System (Flask Deployed Web App)",
+            title: "Smart Traffic Management System",
             featured: true,
-            badge: "🔥 Flagship",
-            icon: "🚦",
-            delay: "",
+            badge: "Flagship",
             link: "https://github.com/Varn1t/traffic-intelligence",
             linkIcon: "github",
             points: [
@@ -20,8 +22,6 @@ const Projects = () => {
         {
             title: "AI-Powered Learning Assistant",
             featured: false,
-            icon: "🤖",
-            delay: "delay-1",
             link: "https://github.com/Varn1t",
             linkIcon: "github",
             points: [
@@ -34,8 +34,6 @@ const Projects = () => {
         {
             title: "House Price Prediction",
             featured: false,
-            icon: "🏠",
-            delay: "delay-2",
             link: "https://colab.research.google.com",
             linkIcon: "colab",
             points: [
@@ -46,10 +44,8 @@ const Projects = () => {
             tools: ["Python", "Scikit-learn", "Pickle", "Regression"]
         },
         {
-            title: "Car Price Prediction (End-to-End ML + Flask Deployment)",
+            title: "Car Price Prediction",
             featured: false,
-            icon: "🚗",
-            delay: "delay-1",
             link: "https://github.com/Varn1t/Car-Price-Predictor",
             linkIcon: "github",
             points: [
@@ -62,10 +58,7 @@ const Projects = () => {
         {
             title: "DDoS Detection System",
             featured: false,
-            badge: "🔧 In Progress",
-            wip: true,
-            icon: "🛡️",
-            delay: "delay-2",
+            badge: "In Progress",
             link: "https://github.com/Varn1t",
             linkIcon: "github",
             points: [
@@ -78,8 +71,6 @@ const Projects = () => {
         {
             title: "Criminal Record DBMS",
             featured: false,
-            icon: "🗄️",
-            delay: "delay-3",
             link: "https://github.com/Varn1t",
             linkIcon: "github",
             points: [
@@ -91,60 +82,159 @@ const Projects = () => {
         }
     ];
 
-    const GithubIcon = () => (
-        <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-        </svg>
-    );
+    const floppyColors = [
+        '#1f2937', // Dark Gray
+        '#1e3a8a', // Deep Blue
+        '#4c1d95', // Purple
+        '#831843', // Burgundy
+        '#14532d', // Forest Green
+        '#7c2d12'  // Rust
+    ];
 
-    const ColabIcon = () => (
-        <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M16.9 4.8C13.7 1.8 8.9 1.9 5.8 5.1 2.7 8.3 2.8 13.2 6 16.2s8 2.9 11.1-.3c1.5-1.5 2.2-3.5 2.2-5.5h-7.4v2.8h4.3c-.6 2.1-2.5 3.6-4.8 3.6-2.9 0-5.2-2.3-5.2-5.2s2.3-5.2 5.2-5.2c1.3 0 2.5.5 3.4 1.3l2.1-2.1z" />
-        </svg>
-    );
+    const handleDiskClick = (index) => {
+        if (activeProject === index || isBooting) return;
+        setIsBooting(true);
+        setActiveProject(index);
+        
+        // Boot sequence timeout (1.5 seconds)
+        setTimeout(() => {
+            setIsBooting(false);
+        }, 1500);
+    };
 
     return (
-        <section className="section section-dark" id="projects">
+        <section className="section projects-section" id="projects">
             <div className="container">
-                <div className="section-header reveal">
-                    <span className="section-tag">04. Projects</span>
-                    <h2 className="section-title">What I've Built</h2>
+                <motion.div 
+                    className="section-header reveal"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                >
+                    <h2 className="section-title">Projects</h2>
                     <div className="section-line"></div>
-                </div>
-                <div className="projects-grid">
-                    {projectsData.map((project, index) => (
-                        <div
-                            className={`project-card ${project.featured ? 'featured' : ''} ${project.wip ? 'in-progress' : ''} reveal ${project.delay}`}
-                            key={index}
-                        >
-                            {project.badge && <div className={`project-badge ${project.wip ? 'wip' : ''}`}>{project.badge}</div>}
+                </motion.div>
 
-                            <div className="project-header">
-                                <div className="project-icon">{project.icon}</div>
-                                <div className="project-links">
-                                    <a href={project.link} target="_blank" rel="noreferrer" className={`proj-link ${project.linkIcon === 'colab' ? 'colab-link' : ''}`} aria-label={project.linkIcon === 'colab' ? 'Colab' : 'GitHub'}>
-                                        {project.linkIcon === 'github' ? <GithubIcon /> : <ColabIcon />}
-                                    </a>
+                <div className="projects-desktop">
+                    
+                    {/* LEFT: Floppy Disks Grid */}
+                    <div className="floppy-desk-grid">
+                        {projectsData.map((project, index) => {
+                            const isInserted = activeProject === index;
+
+                            return (
+                                <motion.div 
+                                    key={index}
+                                    className={`floppy-disk ${isInserted ? 'inserted' : ''}`}
+                                    onClick={() => handleDiskClick(index)}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, margin: "-50px" }}
+                                    animate={isInserted ? {
+                                        scale: 0.95,
+                                        y: -5,
+                                        boxShadow: "0 20px 40px rgba(0,0,0,0.8)"
+                                    } : {
+                                        scale: 1,
+                                        y: 0,
+                                        boxShadow: "0 10px 15px rgba(0,0,0,0.5)"
+                                    }}
+                                    whileHover={!isInserted ? { scale: 1.05, y: -10, boxShadow: "0 15px 30px rgba(0,0,0,0.6)" } : {}}
+                                    transition={{ type: "spring", bounce: 0.4, duration: 0.6 }}
+                                >
+                                    <div className="floppy-plastic" style={{ backgroundColor: floppyColors[index % floppyColors.length] }}>
+                                        <div className="floppy-shutter">
+                                            <div className="shutter-door"></div>
+                                        </div>
+                                        <div className="floppy-arrow"></div>
+                                        <div className="floppy-label-area">
+                                            <div className="floppy-label-paper">
+                                                <div className="label-stripe" style={{ backgroundColor: floppyColors[(index+1) % floppyColors.length] }}></div>
+                                                <span className="label-text">{project.title.split(' ').slice(0, 3).join(' ')}</span>
+                                            </div>
+                                        </div>
+                                        <div className="floppy-notch"></div>
+                                        
+                                        {/* Active indicator overlay */}
+                                        {isInserted && (
+                                            <div className="active-disk-indicator">
+                                                <div className="indicator-light"></div>
+                                                <span>IN DRIVE</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </motion.div>
+                            );
+                        })}
+                    </div>
+
+                    {/* RIGHT: CRT Terminal & Drive */}
+                    <div className="crt-terminal-wrapper">
+                        
+                        <div className="floppy-drive">
+                            <div className="drive-slot"></div>
+                            <div className={`drive-light ${isBooting ? 'reading' : 'idle'}`}></div>
+                        </div>
+
+                        <div className="crt-monitor">
+                            <div className="crt-glass">
+                                <div className="scanlines"></div>
+                                <div className="crt-content">
+                                    {isBooting ? (
+                                        <div className="boot-sequence">
+                                            <p className="boot-1">{`> MOUNTING DISK...`}</p>
+                                            <p className="boot-2">{`> READING SECTORS... [OK]`}</p>
+                                            <p className="boot-3">{`> DECRYPTING PROJECT DATA...`}</p>
+                                            <p className="boot-4 blink">_</p>
+                                        </div>
+                                    ) : (
+                                        <motion.div 
+                                            className="project-data"
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            transition={{ duration: 0.1 }} // Instant CRT pop-in
+                                        >
+                                            <div className="terminal-header">
+                                                <span>A:\&gt; RUN {projectsData[activeProject].title.toUpperCase().replace(/\s+/g, '_').substring(0,10)}.EXE</span>
+                                            </div>
+                                            
+                                            <h3 className="term-title">
+                                                {projectsData[activeProject].title}
+                                                {projectsData[activeProject].badge && (
+                                                    <span className="term-badge"> [{projectsData[activeProject].badge.toUpperCase()}]</span>
+                                                )}
+                                            </h3>
+
+                                            <div className="term-points">
+                                                {projectsData[activeProject].points.map((pt, i) => (
+                                                    <p key={i}>{`* ${pt}`}</p>
+                                                ))}
+                                            </div>
+
+                                            <div className="term-tools">
+                                                <p>{`> SYSTEM DEPENDENCIES:`}</p>
+                                                <ul>
+                                                    {projectsData[activeProject].tools.map((t, i) => (
+                                                        <li key={i}>{`- ${t}`}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+
+                                            <div className="term-actions">
+                                                <a href={projectsData[activeProject].link} target="_blank" rel="noreferrer" className="term-link">
+                                                    {`> EXECUTE SOURCE_CODE (${projectsData[activeProject].linkIcon.toUpperCase()})`}
+                                                </a>
+                                            </div>
+                                            <div className="term-cursor"><span className="blink">_</span></div>
+                                        </motion.div>
+                                    )}
                                 </div>
                             </div>
-
-                            <h3 className="project-title">{project.title}</h3>
-
-                            <ul className="project-desc" style={{ paddingLeft: '1.25rem', flex: 1, marginBottom: '1.25rem' }}>
-                                {project.points.map((point, pIndex) => (
-                                    <li key={pIndex} style={{ marginBottom: pIndex === project.points.length - 1 ? '0' : '0.3rem' }}>
-                                        {point}
-                                    </li>
-                                ))}
-                            </ul>
-
-                            <div className="project-tools">
-                                {project.tools.map((tool, tIndex) => (
-                                    <span className="tool-tag" key={tIndex}>{tool}</span>
-                                ))}
-                            </div>
+                            <div className="monitor-base"></div>
                         </div>
-                    ))}
+                    </div>
+
                 </div>
             </div>
         </section>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -10,19 +10,6 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(true);
-
-  useEffect(() => {
-    if (isDarkMode) {
-      document.body.classList.remove('light-theme');
-    } else {
-      document.body.classList.add('light-theme');
-    }
-  }, [isDarkMode]);
-
-  const toggleTheme = () => setIsDarkMode(!isDarkMode);
-
-  // Global scroll reveal logic
   useEffect(() => {
     const observerOptions = {
       root: null,
@@ -47,7 +34,7 @@ function App() {
 
   return (
     <>
-      <Navbar isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+      <Navbar />
       <Hero />
       <About />
       <Education />
