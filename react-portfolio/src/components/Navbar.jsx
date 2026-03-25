@@ -17,11 +17,10 @@ const Navbar = () => {
             <div className="nav-inner">
                 <div className="nav-brand">VARNIT KALRA</div>
                 <div className={`nav-links-wrap ${isMenuOpen ? 'open' : ''}`}>
-                    <a href="#projects" className="nav-link" onClick={() => setIsMenuOpen(false)}>Work</a>
                     <a href="#about" className="nav-link" onClick={() => setIsMenuOpen(false)}>About</a>
                     <a href="#skills" className="nav-link" onClick={() => setIsMenuOpen(false)}>Skills</a>
                     <a href="#contact" className="nav-link" onClick={() => setIsMenuOpen(false)}>Contact</a>
-                    <a href="https://github.com/Varn1t" target="_blank" rel="noreferrer" className="nav-link nav-cta">Resume</a>
+                    <a href="#projects" className="nav-link nav-cta" onClick={() => setIsMenuOpen(false)}>Projects</a>
                 </div>
                 <button
                     className={`hamburger ${isMenuOpen ? 'open' : ''}`}
