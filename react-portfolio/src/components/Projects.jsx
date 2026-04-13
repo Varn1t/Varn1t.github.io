@@ -13,11 +13,11 @@ const Projects = () => {
             link: "https://github.com/Varn1t/traffic-intelligence",
             linkIcon: "github",
             points: [
-                "Built ML-based traffic density prediction system",
-                "Integrated model into Flask backend",
-                "Designed web interface for real-time prediction"
+                "Tracked 4 vehicle classes with 92%+ accuracy across 5,000+ data points per session",
+                "Predicted lane-specific demand 15s in advance (R² = 0.89); flagged bottlenecks 15–30s early, improving signal timing efficiency by 25%",
+                "Implemented a real-time Chart.js dashboard with CSV logging for zero-data-loss daily traffic distribution reports"
             ],
-            tools: ["Python", "YOLOv8", "Flask", "OpenCV", "Matplotlib"]
+            tools: ["Python", "YOLOv8", "Flask", "OpenCV", "Chart.js", "ML"]
         },
         {
             title: "AI-Powered Learning Assistant",
@@ -55,19 +55,7 @@ const Projects = () => {
             ],
             tools: ["Python", "Scikit-learn", "Flask", "Pickle", "Regression"]
         },
-        {
-            title: "DDoS Detection System",
-            featured: false,
-            badge: "In Progress",
-            link: "https://github.com/Varn1t",
-            linkIcon: "github",
-            points: [
-                "Developed a Python-based tool to detect and mitigate DDoS attacks",
-                "Analyzed packet behavior to identify malicious network traffic",
-                "Merged cybersecurity concepts with ML classification models for real-time threat identification"
-            ],
-            tools: ["Python", "ML Classification", "Cybersecurity"]
-        },
+
         {
             title: "Criminal Record DBMS",
             featured: false,
@@ -79,6 +67,18 @@ const Projects = () => {
                 "Built an intuitive interface tailored for law enforcement data operations"
             ],
             tools: ["Python", "MySQL"]
+        },
+        {
+            title: "Student Performance EDA",
+            featured: false,
+            link: "https://github.com/Varn1t",
+            linkIcon: "colab",
+            points: [
+                "End-to-end EDA on 1,000-student dataset; applied binary, ordinal, and one-hot encoding",
+                "Discovered a 10–11 point math score gap by lunch type (socio-economic proxy) and validated test prep impact (t = 5.70, p < 0.001) via hypothesis testing",
+                "Proposed multiple linear regression as next step targeting RMSE-based evaluation"
+            ],
+            tools: ["Python", "Pandas", "Matplotlib", "Seaborn"]
         }
     ];
 
@@ -88,14 +88,15 @@ const Projects = () => {
         '#4c1d95', // Purple
         '#831843', // Burgundy
         '#14532d', // Forest Green
-        '#7c2d12'  // Rust
+        '#7c2d12', // Rust
+        '#0f4c5c'  // Teal
     ];
 
     const handleDiskClick = (index) => {
         if (activeProject === index || isBooting) return;
         setIsBooting(true);
         setActiveProject(index);
-        
+
         // Boot sequence timeout (1.5 seconds)
         setTimeout(() => {
             setIsBooting(false);
@@ -105,7 +106,7 @@ const Projects = () => {
     return (
         <section className="section projects-section" id="projects">
             <div className="container">
-                <motion.div 
+                <motion.div
                     className="section-header reveal"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -117,14 +118,14 @@ const Projects = () => {
                 </motion.div>
 
                 <div className="projects-desktop">
-                    
+
                     {/* LEFT: Floppy Disks Grid */}
                     <div className="floppy-desk-grid">
                         {projectsData.map((project, index) => {
                             const isInserted = activeProject === index;
 
                             return (
-                                <motion.div 
+                                <motion.div
                                     key={index}
                                     className={`floppy-disk ${isInserted ? 'inserted' : ''}`}
                                     onClick={() => handleDiskClick(index)}
@@ -150,12 +151,12 @@ const Projects = () => {
                                         <div className="floppy-arrow"></div>
                                         <div className="floppy-label-area">
                                             <div className="floppy-label-paper">
-                                                <div className="label-stripe" style={{ backgroundColor: floppyColors[(index+1) % floppyColors.length] }}></div>
+                                                <div className="label-stripe" style={{ backgroundColor: floppyColors[(index + 1) % floppyColors.length] }}></div>
                                                 <span className="label-text">{project.title.split(' ').slice(0, 3).join(' ')}</span>
                                             </div>
                                         </div>
                                         <div className="floppy-notch"></div>
-                                        
+
                                         {/* Active indicator overlay */}
                                         {isInserted && (
                                             <div className="active-disk-indicator">
@@ -171,7 +172,7 @@ const Projects = () => {
 
                     {/* RIGHT: CRT Terminal & Drive */}
                     <div className="crt-terminal-wrapper">
-                        
+
                         <div className="floppy-drive">
                             <div className="drive-slot"></div>
                             <div className={`drive-light ${isBooting ? 'reading' : 'idle'}`}></div>
@@ -189,16 +190,16 @@ const Projects = () => {
                                             <p className="boot-4 blink">_</p>
                                         </div>
                                     ) : (
-                                        <motion.div 
+                                        <motion.div
                                             className="project-data"
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
                                             transition={{ duration: 0.1 }} // Instant CRT pop-in
                                         >
                                             <div className="terminal-header">
-                                                <span>A:\&gt; RUN {projectsData[activeProject].title.toUpperCase().replace(/\s+/g, '_').substring(0,10)}.EXE</span>
+                                                <span>A:\&gt; RUN {projectsData[activeProject].title.toUpperCase().replace(/\s+/g, '_').substring(0, 10)}.EXE</span>
                                             </div>
-                                            
+
                                             <h3 className="term-title">
                                                 {projectsData[activeProject].title}
                                                 {projectsData[activeProject].badge && (

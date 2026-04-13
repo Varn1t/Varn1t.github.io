@@ -6,6 +6,7 @@ const Certificates = () => {
         { name: "AI For Everyone", issuer: "Coursera · Andrew Ng", icon: <BrainIcon />, type: "CERTIFIED" },
         { name: "Industrial Training in AI/ML", issuer: "Gradvation", icon: <CogIcon />, type: "TRAINEE" },
         { name: "Python for Data Science", issuer: "Great Learning", icon: <ChartIcon />, type: "CERTIFIED" },
+        { name: "Exploratory Data Analysis for ML", issuer: "IBM", icon: <DataIcon />, type: "CERTIFIED" },
         { name: "Industry Engagement", issuer: "Microsoft", icon: <BuildingIcon />, type: "PARTICIPANT" },
         { name: "Hackathon Participant", issuer: "Multiple AI & Automation Events", icon: <TrophyIcon />, type: "COMPETITOR" },
         { name: "Model United Nations", issuer: "uMUNg · InternWare 2023", icon: <GlobeIcon />, type: "DELEGATE" }
@@ -159,6 +160,11 @@ const GlobeIcon = () => (
     <svg className="cert-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" />
         <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+    </svg>
+);
+const DataIcon = () => (
+    <svg className="cert-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" /><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
     </svg>
 );
 const RocketIcon = () => (
