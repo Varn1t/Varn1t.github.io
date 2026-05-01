@@ -20,17 +20,19 @@ const Projects = () => {
             tools: ["Python", "YOLOv8", "Flask", "OpenCV", "Chart.js", "ML"]
         },
         {
-            title: "AI-Powered Learning Assistant",
-            featured: false,
-            link: "https://github.com/Varn1t",
+            title: "PDF-RAG Chatbot",
+            featured: true,
+            badge: "New",
+            link: "https://github.com/Varn1t/PDF-RAG-Chatbot",
             linkIcon: "github",
             points: [
-                "Engineered an intelligent chatbot to handle FAQs and build study timetables",
-                "Integrated custom APIs to generate personalized quizzes",
-                "Automated learning resource recommendations using Botpress"
+                "Developed a local RAG pipeline to chat with PDF documents using Ollama (Llama 3) and LangChain, ensuring 100% data privacy",
+                "Implemented document chunking and vector embeddings with all-MiniLM-L6-v2 stored in a FAISS index for high-speed retrieval",
+                "Built a responsive Streamlit interface for seamless PDF uploading and real-time interactive Q&A"
             ],
-            tools: ["Python", "Botpress", "APIs"]
+            tools: ["Python", "LangChain", "FAISS", "Ollama", "Streamlit", "Llama 3"]
         },
+
         {
             title: "House Price Prediction",
             featured: false,

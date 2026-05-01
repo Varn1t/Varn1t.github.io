@@ -36,8 +36,8 @@ const profile = new Developer({
   focus: ['Data Science', 'Machine Learning', 'AI Development'],
   projects: [
     'YOLO-based Traffic Management', 
-    'Regression Models', 
-    'Intelligent Chatbots'
+    'PDF-RAG Chatbot',
+    'Regression Models'
   ],
   traits: [
     'Problem Solver', 

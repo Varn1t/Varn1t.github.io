@@ -11,15 +11,17 @@ const Skills = () => {
 
         // Top Left (90 to 180) -> ML / AI Tools
         { name: "Scikit-learn", prof: 85, angle: 105, color: "#3b82f6" },
-        { name: "NumPy / Pandas", prof: 88, angle: 130, color: "#ec4899" },
-        { name: "YOLOv8 & OpenCV", prof: 75, angle: 155, color: "#14b8a6" },
-        { name: "Matplotlib", prof: 82, angle: 175, color: "#a855f7" },
+        { name: "NumPy / Pandas", prof: 88, angle: 125, color: "#ec4899" },
+        { name: "HuggingFace", prof: 78, angle: 145, color: "#ffcc00" },
+        { name: "YOLOv8 & OpenCV", prof: 75, angle: 165, color: "#14b8a6" },
+        { name: "Matplotlib", prof: 82, angle: 180, color: "#a855f7" },
 
         // Bottom Left (180 to 270) -> Web Dev
         { name: "HTML / CSS", prof: 80, angle: 195, color: "#f43f5e" },
-        { name: "JavaScript", prof: 72, angle: 220, color: "#eab308" },
-        { name: "React", prof: 60, angle: 245, color: "#3b82f6" },
-        { name: "Flask", prof: 65, angle: 265, color: "#64748b" },
+        { name: "JavaScript", prof: 72, angle: 212, color: "#eab308" },
+        { name: "React", prof: 60, angle: 229, color: "#3b82f6" },
+        { name: "Streamlit", prof: 85, angle: 246, color: "#ff4b4b" },
+        { name: "Flask", prof: 65, angle: 263, color: "#64748b" },
 
         // Bottom Right (270 to 360) -> Tools & Env
         { name: "Git / GitHub", prof: 85, angle: 285, color: "#a3e635" },
@@ -34,7 +36,7 @@ const Skills = () => {
         // Center is expert (100%), Edge is beginner (0%)
         // So distance represents how much they have left to learn.
         // We cap it so they aren't on the extreme edge bounding box boundaries.
-        const distance = ((100 - proficiency) / 100) * 42; 
+        const distance = ((100 - proficiency) / 100) * 42;
         const angleRadian = (angleDegrees * Math.PI) / 180;
         const x = 50 + distance * Math.cos(angleRadian);
         const y = 50 - distance * Math.sin(angleRadian); // web y is inverted
@@ -51,7 +53,7 @@ const Skills = () => {
     return (
         <section className="section radar-section" id="skills">
             <div className="container">
-                <motion.div 
+                <motion.div
                     className="section-header"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -62,23 +64,23 @@ const Skills = () => {
                     <div className="section-line"></div>
                 </motion.div>
 
-                <motion.div 
+                <motion.div
                     className="radar-layout"
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
                     viewport={{ once: true, margin: "-100px" }}
                 >
-                    
+
                     {/* The Sonar Screen */}
                     <div className="radar-board">
                         <div className="radar-sweep"></div>
-                        
+
                         {/* Concentric rings denoting expertise */}
                         <div className="radar-ring r-1"></div>
                         <div className="radar-ring r-2"></div>
                         <div className="radar-ring r-3"></div>
-                        
+
                         {/* Axis lines */}
                         <div className="radar-crosshair vertical"></div>
                         <div className="radar-crosshair horizontal"></div>
@@ -88,12 +90,12 @@ const Skills = () => {
                             const coords = getCoordinates(skill.angle, skill.prof);
                             const isHovered = hoveredSkill === idx;
                             return (
-                                <div 
+                                <div
                                     key={idx}
                                     className={`radar-blip ${isHovered ? 'hovered' : ''}`}
-                                    style={{ 
-                                        left: coords.left, 
-                                        top: coords.top, 
+                                    style={{
+                                        left: coords.left,
+                                        top: coords.top,
                                         '--blip-color': skill.color,
                                         '--anim-delay': `${idx * 0.1}s`
                                     }}
@@ -117,7 +119,7 @@ const Skills = () => {
                         <div className="hud-content">
                             <AnimatePresence mode="wait">
                                 {hoveredSkill !== null ? (
-                                    <motion.div 
+                                    <motion.div
                                         key="active"
                                         className="hud-active-target"
                                         initial={{ opacity: 0, x: -20 }}
@@ -135,11 +137,11 @@ const Skills = () => {
                                         <div className="target-stat">
                                             <span className="stat-label">PROFICIENCY</span>
                                             <div className="prof-bar-wrapper">
-                                                <div 
+                                                <div
                                                     className="prof-bar-fill"
-                                                    style={{ 
+                                                    style={{
                                                         width: `${radarSkills[hoveredSkill].prof}%`,
-                                                        backgroundColor: radarSkills[hoveredSkill].color 
+                                                        backgroundColor: radarSkills[hoveredSkill].color
                                                     }}
                                                 ></div>
                                             </div>
@@ -147,7 +149,7 @@ const Skills = () => {
                                         </div>
                                     </motion.div>
                                 ) : (
-                                    <motion.div 
+                                    <motion.div
                                         key="idle"
                                         className="hud-idle"
                                         initial={{ opacity: 0 }}
