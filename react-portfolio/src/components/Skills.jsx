@@ -4,10 +4,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 const Skills = () => {
     const radarSkills = [
         // Top Right (0 to 90) -> Languages
-        { name: "Python", prof: 92, angle: 25, color: "#eab308" },
-        { name: "MySQL", prof: 70, angle: 45, color: "#22c55e" },
-        { name: "C / C++", prof: 65, angle: 65, color: "#9ca3af" },
-        { name: "Java", prof: 40, angle: 85, color: "#f97316" },
+        { name: "Python", prof: 92, angle: 15, color: "#eab308" },
+        { name: "PostgreSQL", prof: 70, angle: 35, color: "#336791" },
+        { name: "MySQL", prof: 70, angle: 55, color: "#22c55e" },
+        { name: "C / C++", prof: 65, angle: 75, color: "#9ca3af" },
+        { name: "Java", prof: 40, angle: 88, color: "#f97316" },
 
         // Top Left (90 to 180) -> ML / AI Tools
         { name: "Scikit-learn", prof: 85, angle: 105, color: "#3b82f6" },

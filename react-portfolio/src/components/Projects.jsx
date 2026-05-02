@@ -59,16 +59,16 @@ const Projects = () => {
         },
 
         {
-            title: "Criminal Record DBMS",
+            title: "Crime Record Management",
             featured: false,
-            link: "https://github.com/Varn1t",
+            link: "https://github.com/Varn1t/Criminal-Record",
             linkIcon: "github",
             points: [
-                "Designed a comprehensive database management system using MySQL",
-                "Integrated Python backend to manage, query, and analyze criminal records",
-                "Built an intuitive interface tailored for law enforcement data operations"
+                "Designed a sleek, interactive Command-Line Interface (CLI) application using the 'rich' library",
+                "Migrated the database backend to PostgreSQL for full CRUD operations and robust search functionality",
+                "Implemented an Analytics Dashboard that dynamically calculates records, categories, and frequent offences"
             ],
-            tools: ["Python", "MySQL"]
+            tools: ["Python", "PostgreSQL", "Rich", "psycopg2"]
         },
         {
             title: "Student Performance EDA",
