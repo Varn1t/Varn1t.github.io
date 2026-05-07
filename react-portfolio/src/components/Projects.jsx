@@ -20,17 +20,17 @@ const Projects = () => {
             tools: ["Python", "YOLOv8", "Flask", "OpenCV", "Chart.js", "ML"]
         },
         {
-            title: "PDF-RAG Chatbot",
+            title: "RAG Chatbot",
             featured: true,
-            badge: "New",
-            link: "https://github.com/Varn1t/PDF-RAG-Chatbot",
+            badge: "Updated",
+            link: "https://github.com/Varn1t/RAG-Chatbot",
             linkIcon: "github",
             points: [
-                "Developed a local RAG pipeline to chat with PDF documents using Ollama (Llama 3) and LangChain, ensuring 100% data privacy",
-                "Implemented document chunking and vector embeddings with all-MiniLM-L6-v2 stored in a FAISS index for high-speed retrieval",
-                "Built a responsive Streamlit interface for seamless PDF uploading and real-time interactive Q&A"
+                "Extended the local RAG pipeline to support both PDF documents and YouTube videos — 100% private, zero API costs",
+                "Chunks content into 1,000-char segments, embeds with all-MiniLM-L6-v2, and stores in FAISS for top-3 context retrieval per query",
+                "Offers dual interfaces: a Streamlit web app (PDF upload + YouTube URL) and an interactive CLI — both powered by Ollama Llama 3"
             ],
-            tools: ["Python", "LangChain", "FAISS", "Ollama", "Streamlit", "Llama 3"]
+            tools: ["Python", "LangChain", "FAISS", "Ollama", "Streamlit", "Llama 3", "YouTube Transcript API"]
         },
 
         {
