@@ -7,10 +7,10 @@ const Projects = () => {
 
     const projectsData = [
         {
-            title: "Smart Traffic Management System",
+            title: "TraffiQ",
             featured: true,
             badge: "Flagship",
-            link: "https://github.com/Varn1t/traffic-intelligence",
+            link: "https://github.com/Varn1t/TraffiQ",
             linkIcon: "github",
             points: [
                 "Tracked 4 vehicle classes with 92%+ accuracy across 5,000+ data points per session",
@@ -32,18 +32,30 @@ const Projects = () => {
             ],
             tools: ["Python", "LangChain", "FAISS", "Ollama", "Streamlit", "Llama 3", "YouTube Transcript API"]
         },
-
         {
-            title: "House Price Prediction",
+            title: "EDAgent: Your data analyst+AI agent",
+            featured: true,
+            badge: "New",
+            link: "https://github.com/Varn1t/EDAgent/tree/main",
+            linkIcon: "github",
+            points: [
+                "Transformed a CLI-based EDA pipeline into a professional web tool, reducing manual data analysis time by up to 80%",
+                "Built a Streamlit frontend with live status feedback, generating comprehensive HTML reports with 15+ automated visualizations",
+                "Refactored a LangGraph pipeline into a modular library, efficiently processing datasets of 100,000+ rows with robust performance"
+            ],
+            tools: ["Python", "Streamlit", "LangGraph", "Data Analysis"]
+        },
+        {
+            title: "Student Performance EDA",
             featured: false,
-            link: "https://colab.research.google.com",
+            link: "https://github.com/Varn1t",
             linkIcon: "colab",
             points: [
-                "Built a regression-based ML pipeline with feature engineering",
-                "Achieved optimized R² performance using OneHotEncoding",
-                "Implemented robust model persistence using Pickle"
+                "End-to-end EDA on 1,000-student dataset; applied binary, ordinal, and one-hot encoding",
+                "Discovered a 10–11 point math score gap by lunch type (socio-economic proxy) and validated test prep impact (t = 5.70, p < 0.001) via hypothesis testing",
+                "Proposed multiple linear regression as next step targeting RMSE-based evaluation"
             ],
-            tools: ["Python", "Scikit-learn", "Pickle", "Regression"]
+            tools: ["Python", "Pandas", "Matplotlib", "Seaborn"]
         },
         {
             title: "Car Price Prediction",
@@ -57,7 +69,18 @@ const Projects = () => {
             ],
             tools: ["Python", "Scikit-learn", "Flask", "Pickle", "Regression"]
         },
-
+        {
+            title: "House Price Prediction",
+            featured: false,
+            link: "https://colab.research.google.com",
+            linkIcon: "colab",
+            points: [
+                "Built a regression-based ML pipeline with feature engineering",
+                "Achieved optimized R² performance using OneHotEncoding",
+                "Implemented robust model persistence using Pickle"
+            ],
+            tools: ["Python", "Scikit-learn", "Pickle", "Regression"]
+        },
         {
             title: "Crime Record Management",
             featured: false,
@@ -69,18 +92,6 @@ const Projects = () => {
                 "Implemented an Analytics Dashboard that dynamically calculates records, categories, and frequent offences"
             ],
             tools: ["Python", "PostgreSQL", "Rich", "psycopg2"]
-        },
-        {
-            title: "Student Performance EDA",
-            featured: false,
-            link: "https://github.com/Varn1t",
-            linkIcon: "colab",
-            points: [
-                "End-to-end EDA on 1,000-student dataset; applied binary, ordinal, and one-hot encoding",
-                "Discovered a 10–11 point math score gap by lunch type (socio-economic proxy) and validated test prep impact (t = 5.70, p < 0.001) via hypothesis testing",
-                "Proposed multiple linear regression as next step targeting RMSE-based evaluation"
-            ],
-            tools: ["Python", "Pandas", "Matplotlib", "Seaborn"]
         }
     ];
 

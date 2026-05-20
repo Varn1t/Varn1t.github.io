@@ -15,7 +15,7 @@ const Skills = () => {
         { name: "NumPy / Pandas", prof: 88, angle: 125, color: "#ec4899" },
         { name: "HuggingFace", prof: 78, angle: 145, color: "#ffcc00" },
         { name: "YOLOv8 & OpenCV", prof: 75, angle: 165, color: "#14b8a6" },
-        { name: "Matplotlib", prof: 82, angle: 180, color: "#a855f7" },
+        { name: "LangChain / Graph", prof: 85, angle: 180, color: "#a855f7" },
 
         // Bottom Left (180 to 270) -> Web Dev
         { name: "HTML / CSS", prof: 80, angle: 195, color: "#f43f5e" },
