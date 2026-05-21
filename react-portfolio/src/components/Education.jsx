@@ -38,7 +38,7 @@ const Education = () => {
                             </div>
                             <div className="tl-stats">
                                 <div className="tl-stat">
-                                    <span className="tl-stat-val">8.5</span>
+                                    <span className="tl-stat-val">8.3</span>
                                     <span className="tl-stat-label">Current GPA</span>
                                 </div>
                             </div>

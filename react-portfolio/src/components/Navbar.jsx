@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Navbar = () => {
+const Navbar = ({ onOpenResume }) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -20,6 +20,17 @@ const Navbar = () => {
                     <a href="#about" className="nav-link" onClick={() => setIsMenuOpen(false)}>About</a>
                     <a href="#skills" className="nav-link" onClick={() => setIsMenuOpen(false)}>Skills</a>
                     <a href="#contact" className="nav-link" onClick={() => setIsMenuOpen(false)}>Contact</a>
+                    <a
+                        href="#resume"
+                        className="nav-link nav-resume"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onOpenResume();
+                            setIsMenuOpen(false);
+                        }}
+                    >
+                        Resume
+                    </a>
                     <a href="#projects" className="nav-link nav-cta" onClick={() => setIsMenuOpen(false)}>Projects</a>
                 </div>
                 <button

@@ -143,6 +143,8 @@ const SyntaxHighlighter = ({ content, lang }) => {
     );
 };
 
+
+
 const About = () => {
     const [activeTab, setActiveTab] = useState('bio.md');
 
@@ -202,7 +204,7 @@ const About = () => {
                                 ))}
                             </div>
 
-                            {/* Code View */}
+                            {/* Code View / PDF View */}
                             <div className="editor-content">
                                 <AnimatePresence mode="wait">
                                     <motion.div

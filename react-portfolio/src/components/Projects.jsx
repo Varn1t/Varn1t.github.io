@@ -15,7 +15,8 @@ const Projects = () => {
             points: [
                 "Tracked 4 vehicle classes with 92%+ accuracy across 5,000+ data points per session",
                 "Predicted lane-specific demand 15s in advance (R² = 0.89); flagged bottlenecks 15–30s early, improving signal timing efficiency by 25%",
-                "Implemented a real-time Chart.js dashboard with CSV logging for zero-data-loss daily traffic distribution reports"
+                "Added a two-way control panel with collapsible sidebar, including live sliders for YOLO confidence (0.10–0.95), speed threshold (20–120 km/h), and incident timeout (2–30s)",
+                "Implemented visualization mode toggles (Lanes, Heatmap, Speed, Timer) with 5-second cooldown protection"
             ],
             tools: ["Python", "YOLOv8", "Flask", "OpenCV", "Chart.js", "ML"]
         },
@@ -26,24 +27,26 @@ const Projects = () => {
             link: "https://github.com/Varn1t/RAG-Chatbot",
             linkIcon: "github",
             points: [
-                "Extended the local RAG pipeline to support both PDF documents and YouTube videos — 100% private, zero API costs",
-                "Chunks content into 1,000-char segments, embeds with all-MiniLM-L6-v2, and stores in FAISS for top-3 context retrieval per query",
-                "Offers dual interfaces: a Streamlit web app (PDF upload + YouTube URL) and an interactive CLI — both powered by Ollama Llama 3"
+                "Extended local RAG pipeline to support PDF and YouTube ingestion, completely private with zero API costs",
+                "Integrated a complete control panel sidebar with live sliders for chunk size (200–2,000 chars), overlap (0–300 chars), and top-K retrieved chunks (1–5)",
+                "Separates data ingestion and config from the clean main chat view, eliminating hardcoded defaults",
+                "Offers dual interfaces: a Streamlit web app and an interactive CLI — both powered by local Ollama Llama 3"
             ],
             tools: ["Python", "LangChain", "FAISS", "Ollama", "Streamlit", "Llama 3", "YouTube Transcript API"]
         },
         {
-            title: "EDAgent: Your data analyst+AI agent",
+            title: "EDAgent: AI Data Analyst & Agentic Pipeline",
             featured: true,
             badge: "New",
             link: "https://github.com/Varn1t/EDAgent/tree/main",
             linkIcon: "github",
             points: [
-                "Transformed a CLI-based EDA pipeline into a professional web tool, reducing manual data analysis time by up to 80%",
-                "Built a Streamlit frontend with live status feedback, generating comprehensive HTML reports with 15+ automated visualizations",
-                "Refactored a LangGraph pipeline into a modular library, efficiently processing datasets of 100,000+ rows with robust performance"
+                "Built a modular agentic data-science assistant using LangGraph (StateGraph) to automate exploratory data analysis (EDA) pipelines, reducing manual processing cycles by 80%",
+                "Processed complex datasets of 100,000+ rows through self-correcting validation loops, ensuring dataset schema integrity and highly reliable code generation",
+                "Generated comprehensive, interactive HTML reports featuring 15+ rich visualizations, diagnostic tests, and automated narrative summaries from LLM analysts",
+                "Designed a sleek, responsive Streamlit dashboard with real-time agent execution telemetry, stage trackers, and granular parameter controllers"
             ],
-            tools: ["Python", "Streamlit", "LangGraph", "Data Analysis"]
+            tools: ["Python", "LangGraph", "Streamlit", "Pandas", "Matplotlib", "Seaborn", "Data Science", "AI Agents"]
         },
         {
             title: "Student Performance EDA",

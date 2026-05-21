@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const Hero = () => {
+const Hero = ({ onOpenResume }) => {
     return (
         <section className="hero-workspace" id="hero">
             {/* Scattered desk objects */}
@@ -54,6 +54,30 @@ const Hero = () => {
                     animate={{ opacity: 1, scale: 1, rotate: 5, y: [0, -9, 0] }}
                     transition={{ duration: 0.8, delay: 0.6, y: { duration: 5, repeat: Infinity, ease: "easeInOut" } }}
                 />
+                <motion.img
+                    src="/assets/dev-glasses.png"
+                    alt="Developer glasses"
+                    className="desk-obj glasses-obj"
+                    initial={{ opacity: 0, scale: 0.6, rotate: -5 }}
+                    animate={{ opacity: 1, scale: 1, rotate: -5, y: [0, -6, 0] }}
+                    transition={{ duration: 0.8, delay: 0.8, y: { duration: 4.8, repeat: Infinity, ease: "easeInOut" } }}
+                />
+                <motion.img
+                    src="/assets/cyber-mouse.png"
+                    alt="Cybernetic developer mouse"
+                    className="desk-obj mouse-obj"
+                    initial={{ opacity: 0, scale: 0.5, rotate: 15 }}
+                    animate={{ opacity: 1, scale: 1, rotate: 15, y: [0, -8, 0] }}
+                    transition={{ duration: 0.8, delay: 1.0, y: { duration: 5.2, repeat: Infinity, ease: "easeInOut" } }}
+                />
+                <motion.img
+                    src="/assets/neural-core.png"
+                    alt="Futuristic neural core"
+                    className="desk-obj neural-core-obj"
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1, y: [0, -12, 0] }}
+                    transition={{ duration: 0.9, delay: 1.2, y: { duration: 5.8, repeat: Infinity, ease: "easeInOut" } }}
+                />
             </div>
 
             {/* Main hero content */}
@@ -68,15 +92,26 @@ const Hero = () => {
                     <span className="hero-title-accent">VARNIT'S</span> PORTFOLIO
                 </motion.h1>
 
-                <motion.a
-                    href="#projects"
-                    className="hero-cta"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.6 }}
-                >
-                    View Projects
-                </motion.a>
+                <div className="hero-ctas">
+                    <motion.a
+                        href="#projects"
+                        className="hero-cta"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.6 }}
+                    >
+                        View Projects
+                    </motion.a>
+                    <motion.button
+                        onClick={onOpenResume}
+                        className="hero-cta secondary-cta"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.7 }}
+                    >
+                        View Resume
+                    </motion.button>
+                </div>
             </div>
         </section>
     );
