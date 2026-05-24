@@ -33,11 +33,12 @@ Beyond code, I serve as a Mentor at InternWare, have represented institutions as
         content: `import { Developer } from 'varnit';
 
 const profile = new Developer({
-  focus: ['Data Science', 'Machine Learning', 'AI Development'],
+  focus: ['Data Science', 'Machine Learning', 'MLOps', 'AI Development'],
   projects: [
     'TraffiQ', 
     'RAG Chatbot',
-    'EDAgent'
+    'EDAgent',
+    'SkyFlow-MLOps'
   ],
   traits: [
     'Problem Solver', 

@@ -75,11 +75,11 @@ const ResumeModal = ({ isOpen, onClose }) => {
         projects: {
             title: "NODE // INTEL_PROJECTS",
             subtitle: "FLAGSHIP AI & ML BUILDS",
-            summary: "Proven experience building and optimizing production-ready intelligent applications. Main builds cover CV-based forecasting, private offline RAG platforms, and multi-agent task orchestrators.",
+            summary: "Proven experience building and optimizing production-ready intelligent applications. Main builds cover weather-forecasting containerized MLOps pipelines (SkyFlow-MLOps), local LLM retrieval platforms (RAG Chatbot), autonomous analytical agents (EDAgent), and CV-based traffic demand forecasting (TraffiQ).",
             stats: [
-                { label: "TraffiQ R² SCORE", value: "0.89 (Accurate)" },
-                { label: "LOCAL LLM CORE", value: "Llama 3 (Ollama)" },
-                { label: "AGENT ORCHESTRA", value: "LangGraph (Modular)" }
+                { label: "MLOPS PIPELINE", value: "Airflow & MLflow" },
+                { label: "AGENT ORCHESTRA", value: "LangGraph (Modular)" },
+                { label: "TraffiQ R² SCORE", value: "0.89 (Accurate)" }
             ]
         },
         leadership: {
@@ -95,11 +95,11 @@ const ResumeModal = ({ isOpen, onClose }) => {
         ml: {
             title: "NODE // ML_ENGINE_CORE",
             subtitle: "CORE MODELS & STATISTICAL DS",
-            summary: "Advanced numerical modeling, machine learning, and neural network development. Expert in building end-to-end data processing pipelines, visualization tools, and model fine-tuning arrays.",
+            summary: "Advanced numerical modeling, machine learning, and neural network development. Expert in building end-to-end data processing pipelines (SkyFlow-MLOps), model registration, and validation matrices.",
             stats: [
-                { label: "CORE ENGINES", value: "PyTorch, TensorFlow" },
-                { label: "ALGO & NUMERICAL", value: "Scikit-learn, SciPy, NumPy, Pandas" },
-                { label: "DATA VIZ ARRAY", value: "Matplotlib, Seaborn, Plotly" }
+                { label: "CORE ENGINES", value: "PyTorch, TensorFlow, Scikit-learn" },
+                { label: "ORCHESTRATE / REG", value: "MLflow, Apache Airflow" },
+                { label: "ALGO & NUMERICAL", value: "Pandas, NumPy, SciPy" }
             ]
         },
         genai: {
@@ -125,11 +125,11 @@ const ResumeModal = ({ isOpen, onClose }) => {
         db: {
             title: "NODE // PERSISTENCE_WEB_STACK",
             subtitle: "INTERACTIVE DATA PRODUCTS",
-            summary: "Structuring and serving data products. Connecting transactional and vector stores to modern client applications, building full-fidelity Streamlit pipelines, Flask backends, and responsive React interfaces.",
+            summary: "Structuring and serving data products. Connecting transactional and vector stores to modern client applications, building full-fidelity Streamlit pipelines, Flask backends, and responsive React interfaces. Containerized infrastructure deployment using Docker microservices.",
             stats: [
                 { label: "DATABASE CORES", value: "PostgreSQL, MySQL" },
-                { label: "DATA APP ENG", value: "Streamlit, Flask" },
-                { label: "CLIENT STACK", value: "React, HTML5, CSS3, Javascript" }
+                { label: "MLOPS & CONTAINER", value: "Docker, Airflow, MLflow" },
+                { label: "CLIENT STACK", value: "React, Streamlit, Flask" }
             ]
         }
     };

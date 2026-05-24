@@ -9,7 +9,6 @@ const Projects = () => {
         {
             title: "TraffiQ",
             featured: true,
-            badge: "Flagship",
             link: "https://github.com/Varn1t/TraffiQ",
             linkIcon: "github",
             points: [
@@ -23,7 +22,6 @@ const Projects = () => {
         {
             title: "RAG Chatbot",
             featured: true,
-            badge: "Updated",
             link: "https://github.com/Varn1t/RAG-Chatbot",
             linkIcon: "github",
             points: [
@@ -35,9 +33,8 @@ const Projects = () => {
             tools: ["Python", "LangChain", "FAISS", "Ollama", "Streamlit", "Llama 3", "YouTube Transcript API"]
         },
         {
-            title: "EDAgent: AI Data Analyst & Agentic Pipeline",
+            title: "EDAgent: Your data analyst+AI agent",
             featured: true,
-            badge: "New",
             link: "https://github.com/Varn1t/EDAgent/tree/main",
             linkIcon: "github",
             points: [
@@ -46,7 +43,20 @@ const Projects = () => {
                 "Generated comprehensive, interactive HTML reports featuring 15+ rich visualizations, diagnostic tests, and automated narrative summaries from LLM analysts",
                 "Designed a sleek, responsive Streamlit dashboard with real-time agent execution telemetry, stage trackers, and granular parameter controllers"
             ],
-            tools: ["Python", "LangGraph", "Streamlit", "Pandas", "Matplotlib", "Seaborn", "Data Science", "AI Agents"]
+            tools: ["Python", "Streamlit", "LangGraph", "Data Analysis"]
+        },
+        {
+            title: "SkyFlow-MLOps",
+            featured: true,
+            link: "https://github.com/Varn1t/SkyFlow-MLOps",
+            linkIcon: "github",
+            points: [
+                "Architected a fully containerized end-to-end MLOps pipeline orchestrating historical weather data ingestion, preprocessing, model training, and lifecycle registry",
+                "Orchestrated daily pipelines with Apache Airflow to ingest 17,000+ hourly weather records via keyless Open-Meteo API and trigger Docker microservices",
+                "Logged experiments, parameters, and models dynamically using MLflow, persisting runs to a SQLite db mapping mapped between local dev and containers",
+                "Developed an AI-powered validation agent using local Ollama (Llama 3) to analyze training metric anomalies and provide reasoned deployment verdicts"
+            ],
+            tools: ["Apache Airflow", "MLflow", "Docker", "Ollama", "Scikit-Learn", "Python", "MLOps"]
         },
         {
             title: "Student Performance EDA",
@@ -218,9 +228,6 @@ const Projects = () => {
 
                                             <h3 className="term-title">
                                                 {projectsData[activeProject].title}
-                                                {projectsData[activeProject].badge && (
-                                                    <span className="term-badge"> [{projectsData[activeProject].badge.toUpperCase()}]</span>
-                                                )}
                                             </h3>
 
                                             <div className="term-points">

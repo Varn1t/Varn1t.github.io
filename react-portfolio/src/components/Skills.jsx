@@ -26,6 +26,7 @@ const Skills = () => {
 
         // Bottom Right (270 to 360) -> Tools & Env
         { name: "Git / GitHub", prof: 85, angle: 285, color: "#a3e635" },
+        { name: "Docker & MLOps", prof: 82, angle: 298, color: "#2496ed" },
         { name: "Botpress", prof: 70, angle: 310, color: "#d946ef" },
         { name: "Jupyter / Colab", prof: 90, angle: 335, color: "#f97316" },
         { name: "VS Code", prof: 90, angle: 355, color: "#0ea5e9" },
