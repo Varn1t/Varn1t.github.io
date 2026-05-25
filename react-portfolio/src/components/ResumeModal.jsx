@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ResumeModal = ({ isOpen, onClose }) => {
-    const resumeUrl = "https://drive.google.com/file/d/1U-4jf4sHqRCGfReUimZMA2YsU-h4mUQX/view?usp=sharing";
-    const downloadUrl = "https://drive.google.com/uc?export=download&id=1U-4jf4sHqRCGfReUimZMA2YsU-h4mUQX";
+    const resumeUrl = "https://drive.google.com/file/d/1i0Eo_2xk8-RqFJyhfde8kwxVnWYkpqCm/view?usp=sharing";
+    const downloadUrl = "https://drive.google.com/uc?export=download&id=1i0Eo_2xk8-RqFJyhfde8kwxVnWYkpqCm";
 
     const [hoveredNode, setHoveredNode] = useState(null);
     const [selectedNode, setSelectedNode] = useState(null);
