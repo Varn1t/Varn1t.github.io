@@ -20,9 +20,9 @@ const Projects = () => {
             tools: ["Python", "YOLOv8", "Flask", "OpenCV", "Chart.js", "ML"]
         },
         {
-            title: "ContextFlow",
+            title: "LoreLoop",
             featured: true,
-            link: "https://github.com/Varn1t/ContextFlow",
+            link: "https://github.com/Varn1t/LoreLoop",
             linkIcon: "github",
             points: [
                 "Extended local RAG pipeline to support PDF and YouTube ingestion, completely private with zero API costs",
