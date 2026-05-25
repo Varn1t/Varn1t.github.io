@@ -75,7 +75,7 @@ const ResumeModal = ({ isOpen, onClose }) => {
         projects: {
             title: "NODE // INTEL_PROJECTS",
             subtitle: "FLAGSHIP AI & ML BUILDS",
-            summary: "Proven experience building and optimizing production-ready intelligent applications. Main builds cover weather-forecasting containerized MLOps pipelines (SkyFlow-MLOps), local LLM retrieval platforms (RAG Chatbot), autonomous analytical agents (EDAgent), and CV-based traffic demand forecasting (TraffiQ).",
+            summary: "Proven experience building and optimizing production-ready intelligent applications. Main builds cover weather-forecasting containerized MLOps pipelines (SkyFlow-MLOps), local LLM retrieval platforms (ContextFlow), autonomous analytical agents (EDAgent), and CV-based traffic demand forecasting (TraffiQ).",
             stats: [
                 { label: "MLOPS PIPELINE", value: "Airflow & MLflow" },
                 { label: "AGENT ORCHESTRA", value: "LangGraph (Modular)" },
@@ -105,7 +105,7 @@ const ResumeModal = ({ isOpen, onClose }) => {
         genai: {
             title: "NODE // GENAI_AGENT_RAG",
             subtitle: "INTELLIGENT AGENTS & COGNITIVE RAG",
-            summary: "Designing state-of-the-art agentic pipelines and knowledge retrieval architectures. Built EDAgent, a modular LangGraph-powered AI Data Analyst that automates complex EDA pipelines on 100,000+ rows and compiles polished HTML dashboards with 15+ automated visualizations. Also engineered a high-performance, private RAG Chatbot with interactive Streamlit sidebars, custom document parsing, FAISS vector search, and Llama 3 (Ollama) inference.",
+            summary: "Designing state-of-the-art agentic pipelines and knowledge retrieval architectures. Built EDAgent, a modular LangGraph-powered AI Data Analyst that automates complex EDA pipelines on 100,000+ rows and compiles polished HTML dashboards with 15+ automated visualizations. Also engineered ContextFlow, a high-performance, private RAG chatbot with interactive Streamlit sidebars, custom document parsing, FAISS vector search, and Llama 3 (Ollama) inference.",
             stats: [
                 { label: "AGENT FRAMEWORK", value: "LangGraph (StateGraph)" },
                 { label: "DATA ANALYST", value: "EDAgent Core Engine" },

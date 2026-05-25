@@ -36,7 +36,7 @@ const profile = new Developer({
   focus: ['Data Science', 'Machine Learning', 'MLOps', 'AI Development'],
   projects: [
     'TraffiQ', 
-    'RAG Chatbot',
+    'ContextFlow',
     'EDAgent',
     'SkyFlow-MLOps'
   ],

@@ -20,9 +20,9 @@ const Projects = () => {
             tools: ["Python", "YOLOv8", "Flask", "OpenCV", "Chart.js", "ML"]
         },
         {
-            title: "RAG Chatbot",
+            title: "ContextFlow",
             featured: true,
-            link: "https://github.com/Varn1t/RAG-Chatbot",
+            link: "https://github.com/Varn1t/ContextFlow",
             linkIcon: "github",
             points: [
                 "Extended local RAG pipeline to support PDF and YouTube ingestion, completely private with zero API costs",
