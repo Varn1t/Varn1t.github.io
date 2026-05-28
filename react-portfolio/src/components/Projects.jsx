@@ -20,32 +20,6 @@ const Projects = () => {
             tools: ["Python", "YOLOv8", "Flask", "OpenCV", "Chart.js", "ML"]
         },
         {
-            title: "LoreLoop",
-            featured: true,
-            link: "https://github.com/Varn1t/LoreLoop",
-            linkIcon: "github",
-            points: [
-                "Extended local RAG pipeline to support PDF and YouTube ingestion, completely private with zero API costs",
-                "Integrated a complete control panel sidebar with live sliders for chunk size (200–2,000 chars), overlap (0–300 chars), and top-K retrieved chunks (1–5)",
-                "Separates data ingestion and config from the clean main chat view, eliminating hardcoded defaults",
-                "Offers dual interfaces: a Streamlit web app and an interactive CLI — both powered by local Ollama Llama 3"
-            ],
-            tools: ["Python", "LangChain", "FAISS", "Ollama", "Streamlit", "Llama 3", "YouTube Transcript API"]
-        },
-        {
-            title: "EDAgent: Your data analyst+AI agent",
-            featured: true,
-            link: "https://github.com/Varn1t/EDAgent/tree/main",
-            linkIcon: "github",
-            points: [
-                "Built a modular agentic data-science assistant using LangGraph (StateGraph) to automate exploratory data analysis (EDA) pipelines, reducing manual processing cycles by 80%",
-                "Processed complex datasets of 100,000+ rows through self-correcting validation loops, ensuring dataset schema integrity and highly reliable code generation",
-                "Generated comprehensive, interactive HTML reports featuring 15+ rich visualizations, diagnostic tests, and automated narrative summaries from LLM analysts",
-                "Designed a sleek, responsive Streamlit dashboard with real-time agent execution telemetry, stage trackers, and granular parameter controllers"
-            ],
-            tools: ["Python", "Streamlit", "LangGraph", "Data Analysis"]
-        },
-        {
             title: "SkyFlow-MLOps",
             featured: true,
             link: "https://github.com/Varn1t/SkyFlow-MLOps",
@@ -59,10 +33,36 @@ const Projects = () => {
             tools: ["Apache Airflow", "MLflow", "Docker", "Ollama", "Scikit-Learn", "Python", "MLOps"]
         },
         {
+            title: "EDAgent: Your data analyst+AI agent",
+            featured: true,
+            link: "https://github.com/Varn1t/EDAgent/tree/main",
+            linkIcon: "github",
+            points: [
+                "Built a modular agentic data-science assistant using LangGraph (StateGraph) to automate exploratory data analysis (EDA) pipelines, reducing manual processing cycles by 80%",
+                "Processed complex datasets of 100,000+ rows through self-correcting validation loops, ensuring dataset schema integrity and highly reliable code generation",
+                "Generated comprehensive, interactive HTML reports featuring 15+ rich visualizations, diagnostic tests, and automated narrative summaries from LLM analysts",
+                "Designed a sleek, responsive Streamlit dashboard with real-time agent execution telemetry, stage trackers, and granular parameter controllers"
+            ],
+            tools: ["Python", "Streamlit", "LangGraph", "Data Analysis", "LangChain", "Llama 3"]
+        },
+        {
+            title: "LoreLoop - RAG Chatbot",
+            featured: true,
+            link: "https://github.com/Varn1t/LoreLoop",
+            linkIcon: "github",
+            points: [
+                "Extended local RAG pipeline to support PDF and YouTube ingestion, completely private with zero API costs",
+                "Integrated a complete control panel sidebar with live sliders for chunk size (200–2,000 chars), overlap (0–300 chars), and top-K retrieved chunks (1–5)",
+                "Separates data ingestion and config from the clean main chat view, eliminating hardcoded defaults",
+                "Offers dual interfaces: a Streamlit web app and an interactive CLI — both powered by local Ollama Llama 3"
+            ],
+            tools: ["Python", "LangChain", "FAISS", "Ollama", "Streamlit", "Llama 3", "YouTube Transcript API"]
+        },
+        {
             title: "Student Performance EDA",
             featured: false,
-            link: "https://github.com/Varn1t",
-            linkIcon: "colab",
+            link: "https://github.com/Varn1t/Student-Dataset-EDA",
+            linkIcon: "github",
             points: [
                 "End-to-end EDA on 1,000-student dataset; applied binary, ordinal, and one-hot encoding",
                 "Discovered a 10–11 point math score gap by lunch type (socio-economic proxy) and validated test prep impact (t = 5.70, p < 0.001) via hypothesis testing",
@@ -85,7 +85,7 @@ const Projects = () => {
         {
             title: "House Price Prediction",
             featured: false,
-            link: "https://colab.research.google.com",
+            link: "https://colab.research.google.com/drive/1a3sbD_7d2q17hwsYz-m2WkWgluH2xtKr?usp=sharing",
             linkIcon: "colab",
             points: [
                 "Built a regression-based ML pipeline with feature engineering",
