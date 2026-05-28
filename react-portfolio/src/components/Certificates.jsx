@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 
 const Certificates = () => {
     const certsData = [
+        { name: "GenAI Powered Data Analytics Job Simulation", issuer: "Tata", icon: <BrainIcon />, type: "SIMULATION" },
         { name: "AI For Everyone", issuer: "Coursera · Andrew Ng", icon: <BrainIcon />, type: "CERTIFIED" },
         { name: "Industrial Training in AI/ML", issuer: "Gradvation", icon: <CogIcon />, type: "TRAINEE" },
         { name: "Python for Data Science", issuer: "Great Learning", icon: <ChartIcon />, type: "CERTIFIED" },
