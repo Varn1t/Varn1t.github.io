@@ -75,10 +75,11 @@ const ResumeModal = ({ isOpen, onClose }) => {
         projects: {
             title: "NODE // INTEL_PROJECTS",
             subtitle: "FLAGSHIP AI & ML BUILDS",
-            summary: "Proven experience building and optimizing production-ready intelligent applications. Main builds cover weather-forecasting containerized MLOps pipelines (SkyFlow-MLOps), local LLM retrieval platforms (LoreLoop), autonomous analytical agents (EDAgent), and CV-based traffic demand forecasting (TraffiQ).",
+            summary: "Proven experience building and optimizing production-ready intelligent applications. Main builds cover weather-forecasting containerized MLOps pipelines (SkyFlow-MLOps), local LLM retrieval platforms (LoreLoop), autonomous analytical agents (EDAgent), CV-based traffic demand forecasting (TraffiQ), and a hybrid movie recommender system (CineMatch).",
             stats: [
                 { label: "MLOPS PIPELINE", value: "Airflow & MLflow" },
                 { label: "AGENT ORCHESTRA", value: "LangGraph (Modular)" },
+                { label: "CINEMATCH RMSE", value: "0.871 (SVD)" },
                 { label: "TraffiQ R² SCORE", value: "0.89 (Accurate)" }
             ]
         },
@@ -184,7 +185,7 @@ const ResumeModal = ({ isOpen, onClose }) => {
 
                         {/* Split Panels */}
                         <div className="neural-split-body">
-                            
+
                             {/* Panel 1: SVG Neural Graph */}
                             <div className="neural-graph-panel">
                                 <div className="panel-title">[ DYNAMIC COMPUTATIONAL GRAPH ]</div>
@@ -274,8 +275,8 @@ const ResumeModal = ({ isOpen, onClose }) => {
                                         {INPUT_NODES.map(node => {
                                             const isActive = activeDetailsId === node.detailsId;
                                             return (
-                                                <g 
-                                                    key={node.id} 
+                                                <g
+                                                    key={node.id}
                                                     className="node-group cursor-pointer"
                                                     onMouseEnter={() => setHoveredNode(node.detailsId)}
                                                     onMouseLeave={() => setHoveredNode(null)}
@@ -297,9 +298,9 @@ const ResumeModal = ({ isOpen, onClose }) => {
                                                         r={isActive ? 6 : 4}
                                                         fill={node.color}
                                                     />
-                                                    <text 
-                                                        x={45} 
-                                                        y={node.y + (node.y > 180 ? -22 : 28)} 
+                                                    <text
+                                                        x={45}
+                                                        y={node.y + (node.y > 180 ? -22 : 28)}
                                                         className={`node-label ${isActive ? 'active' : ''}`}
                                                         fill={isActive ? '#fff' : '#8b949e'}
                                                         textAnchor="middle"
@@ -314,7 +315,7 @@ const ResumeModal = ({ isOpen, onClose }) => {
                                         {HIDDEN_NODES.map(node => {
                                             const isActive = activeDetailsId === node.detailsId;
                                             return (
-                                                <g 
+                                                <g
                                                     key={node.id}
                                                     className="node-group cursor-pointer"
                                                     onMouseEnter={() => setHoveredNode(node.detailsId)}
@@ -337,9 +338,9 @@ const ResumeModal = ({ isOpen, onClose }) => {
                                                         r={isActive ? 6 : 4}
                                                         fill={node.color}
                                                     />
-                                                    <text 
-                                                        x={205} 
-                                                        y={node.y + 4} 
+                                                    <text
+                                                        x={205}
+                                                        y={node.y + 4}
                                                         className={`node-label text-right ${isActive ? 'active' : ''}`}
                                                         fill={isActive ? '#fff' : '#8b949e'}
                                                         textAnchor="end"
@@ -352,13 +353,13 @@ const ResumeModal = ({ isOpen, onClose }) => {
 
                                         {/* 5. Output Layer Nodes */}
                                         {OUTPUT_NODES.map(node => (
-                                            <a 
-                                                href={node.url} 
-                                                target="_blank" 
-                                                rel="noopener noreferrer" 
+                                            <a
+                                                href={node.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
                                                 key={node.id}
                                             >
-                                                <g 
+                                                <g
                                                     className="node-group cursor-pointer output-link-node"
                                                     onMouseEnter={() => setHoveredNode(node.id === 'out_view' ? 'out_view' : 'out_down')}
                                                     onMouseLeave={() => setHoveredNode(null)}
@@ -373,14 +374,14 @@ const ResumeModal = ({ isOpen, onClose }) => {
                                                         strokeWidth={1.5}
                                                     />
                                                     <polygon
-                                                        points={node.id === 'out_view' 
-                                                            ? `${401},${node.y-4} ${411},${node.y} ${401},${node.y+4}` 
-                                                            : `${405},${node.y-5} ${405},${node.y+3} ${401},${node.y+3} ${405},${node.y+7} ${409},${node.y+3} ${405},${node.y+3}`}
+                                                        points={node.id === 'out_view'
+                                                            ? `${401},${node.y - 4} ${411},${node.y} ${401},${node.y + 4}`
+                                                            : `${405},${node.y - 5} ${405},${node.y + 3} ${401},${node.y + 3} ${405},${node.y + 7} ${409},${node.y + 3} ${405},${node.y + 3}`}
                                                         fill={node.color}
                                                     />
-                                                    <text 
-                                                        x={405} 
-                                                        y={node.y + (node.y > 180 ? 26 : -20)} 
+                                                    <text
+                                                        x={405}
+                                                        y={node.y + (node.y > 180 ? 26 : -20)}
                                                         className="node-label output-lbl"
                                                         fill="#c084fc"
                                                         textAnchor="middle"

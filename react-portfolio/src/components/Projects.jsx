@@ -59,6 +59,19 @@ const Projects = () => {
             tools: ["Python", "LangChain", "FAISS", "Ollama", "Streamlit", "Llama 3", "YouTube Transcript API"]
         },
         {
+            title: "CineMatch",
+            featured: true,
+            link: "https://github.com/Varn1t/CineMatch",
+            linkIcon: "github",
+            points: [
+                "Built a hybrid movie recommender fusing collaborative filtering (SVD matrix factorization) and content-based filtering (TF-IDF genre similarity) on MovieLens Latest Small",
+                "Achieved robust performance with an RMSE of 0.871, Precision@10 of 55.8%, and Recall@10 of 66.2% verified via 5-fold cross-validation",
+                "Designed an interactive Streamlit dashboard featuring seed-based recommendation generation, rating distribution histograms, and user similarity insights with A/B comparison",
+                "Developed advanced analytics tabs displaying 2D PCA projections of SVD latent factors colored by genre, and a parameter sensitivity heatmap for dynamic alpha-tuning"
+            ],
+            tools: ["Python", "Streamlit", "Scikit-Learn", "Surprise (SVD)", "Pandas", "Matplotlib", "Collaborative Filtering", "TF-IDF"]
+        },
+        {
             title: "Student Performance EDA",
             featured: false,
             link: "https://github.com/Varn1t/Student-Dataset-EDA",
