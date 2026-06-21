@@ -4,10 +4,10 @@ import { motion } from 'framer-motion';
 const Certificates = () => {
     const certsData = [
         { name: "GenAI Powered Data Analytics Job Simulation", issuer: "Tata", icon: <BrainIcon />, type: "SIMULATION" },
-        { name: "AI For Everyone", issuer: "Coursera · Andrew Ng", icon: <BrainIcon />, type: "CERTIFIED" },
         { name: "Industrial Training in AI/ML", issuer: "Gradvation", icon: <CogIcon />, type: "TRAINEE" },
         { name: "Python for Data Science", issuer: "Great Learning", icon: <ChartIcon />, type: "CERTIFIED" },
         { name: "Exploratory Data Analysis for ML", issuer: "IBM", icon: <DataIcon />, type: "CERTIFIED" },
+        { name: "Supervised Machine Learning: Regression", issuer: "IBM", icon: <ChartIcon />, type: "CERTIFIED" },
         { name: "Industry Engagement", issuer: "Microsoft", icon: <BuildingIcon />, type: "PARTICIPANT" },
         { name: "Hackathon Participant", issuer: "Multiple AI & Automation Events", icon: <TrophyIcon />, type: "COMPETITOR" },
         { name: "Model United Nations", issuer: "uMUNg · InternWare 2023", icon: <GlobeIcon />, type: "DELEGATE" }
@@ -23,7 +23,7 @@ const Certificates = () => {
     return (
         <section className="section certificates-section" id="certificates">
             <div className="container">
-                <motion.div 
+                <motion.div
                     className="section-header reveal"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -42,15 +42,15 @@ const Certificates = () => {
                         const delay = index * 0.2;
 
                         return (
-                            <motion.div 
-                                className="lanyard-wrapper" 
+                            <motion.div
+                                className="lanyard-wrapper"
                                 key={index}
                                 initial={{ opacity: 0, y: -50 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, margin: "-100px" }}
                                 style={{ transformOrigin: "top center" }}
                                 animate={{ rotate: rotation }}
-                                transition={{ 
+                                transition={{
                                     opacity: { duration: 0.5, delay },
                                     y: { duration: 0.8, type: "spring", bounce: 0.4, delay },
                                     rotate: { repeat: Infinity, duration, ease: "easeInOut", delay }
@@ -59,7 +59,7 @@ const Certificates = () => {
                             >
                                 <div className="lanyard-strap"></div>
                                 <div className="lanyard-clip"></div>
-                                
+
                                 <div className="id-badge">
                                     <div className="badge-hole"></div>
                                     <div className="badge-header">
@@ -69,7 +69,7 @@ const Certificates = () => {
                                         <div className="cert-icon">{cert.icon}</div>
                                         <h4 className="cert-name">{cert.name}</h4>
                                         <p className="cert-issuer">{cert.issuer}</p>
-                                        
+
                                         <div className="badge-footer">
                                             <div className="barcode">|| | ||| || ||| | ||</div>
                                             <span className="badge-id">ID: 00{index + 1}-VK</span>
@@ -83,14 +83,14 @@ const Certificates = () => {
                     })}
 
                     {/* VIP ALL-ACCESS PASS for Leadership */}
-                    <motion.div 
+                    <motion.div
                         className="lanyard-wrapper vip-pass"
                         initial={{ opacity: 0, y: -50 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-100px" }}
                         style={{ transformOrigin: "top center" }}
                         animate={{ rotate: [-1, 1, -1] }}
-                        transition={{ 
+                        transition={{
                             opacity: { duration: 0.5, delay: 0.8 },
                             y: { duration: 0.8, type: "spring", bounce: 0.4, delay: 0.8 },
                             rotate: { repeat: Infinity, duration: 6, ease: "easeInOut" }
@@ -99,7 +99,7 @@ const Certificates = () => {
                     >
                         <div className="lanyard-strap vip-strap"></div>
                         <div className="lanyard-clip vip-clip"></div>
-                        
+
                         <div className="id-badge vip-badge">
                             <div className="badge-hole"></div>
                             <div className="badge-header vip-header">

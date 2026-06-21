@@ -40,7 +40,7 @@ const Projects = () => {
             points: [
                 "Built a modular agentic data-science assistant using LangGraph (StateGraph) to automate exploratory data analysis (EDA) pipelines, reducing manual processing cycles by 80%",
                 "Processed complex datasets of 100,000+ rows through self-correcting validation loops, ensuring dataset schema integrity and highly reliable code generation",
-                "Generated comprehensive, interactive HTML reports featuring 15+ rich visualizations, diagnostic tests, and automated narrative summaries from LLM analysts",
+                "Generated comprehensive, interactive HTML reports featuring 15+ rich visualizations, data cleaning, advanced statistical analysis, diagnostic tests, and automated narrative summaries from LLM analysts",
                 "Designed a sleek, responsive Streamlit dashboard with real-time agent execution telemetry, stage trackers, and granular parameter controllers"
             ],
             tools: ["Python", "Streamlit", "LangGraph", "Data Analysis", "LangChain", "Llama 3"]
