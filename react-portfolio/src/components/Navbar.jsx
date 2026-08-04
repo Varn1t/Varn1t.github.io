@@ -18,6 +18,7 @@ const Navbar = ({ onOpenResume }) => {
                 <div className="nav-brand">VARNIT KALRA</div>
                 <div className={`nav-links-wrap ${isMenuOpen ? 'open' : ''}`}>
                     <a href="#about" className="nav-link" onClick={() => setIsMenuOpen(false)}>About</a>
+                    <a href="#experience" className="nav-link" onClick={() => setIsMenuOpen(false)}>Experience</a>
                     <a href="#skills" className="nav-link" onClick={() => setIsMenuOpen(false)}>Skills</a>
                     <a href="#contact" className="nav-link" onClick={() => setIsMenuOpen(false)}>Contact</a>
                     <a
