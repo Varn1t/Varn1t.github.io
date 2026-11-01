@@ -14,9 +14,9 @@ const Projects = () => {
             points: [
                 "Built a citation-grounded RAG assistant for Indian IP and AYUSH regulatory law over 3,491 provisions from 35 statutes and treaties, with click-to-source back to the PDF page",
                 "Paired it with a deterministic compliance compiler: describe a formulation and 14 verified rules return blockers, obligations and fixes in ~30 ms, with no LLM in that path",
-                "Hybrid BM25 + dense retrieval with an intent-aware reranker; on a held-out set written before tuning, 84% recall@5 and 8/8 correct refusals",
+                "Hybrid BM25 + dense retrieval with an intent-aware reranker; on a held-out set written before tuning, 81% recall@5 and 8/8 correct refusals",
                 "Added scope guardrails for foreign law, off-topic, clinical, law-evasion and prompt-injection questions, pinned by 17 tests within a 252-test suite",
-                "Runs fully local on Ollama with zero network calls; answers in 11 Indian languages; ships as a pip-installable CLI and a Docker image"
+                "Runs fully local on Ollama with zero network calls; answers in 11 Indian languages; ships as a five-view web app, a pip-installable CLI and a Docker image"
             ],
             tools: ["Python", "RAG", "Ollama", "FastAPI", "BM25", "Knowledge Graph", "PyMuPDF", "Docker"]
         },

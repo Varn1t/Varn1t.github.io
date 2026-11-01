@@ -79,7 +79,7 @@ const ResumeModal = ({ isOpen, onClose }) => {
             stats: [
                 { label: "MLOPS PIPELINE", value: "Airflow & MLflow" },
                 { label: "AGENT ORCHESTRA", value: "LangGraph (Modular)" },
-                { label: "AYURLEX RECALL@5", value: "0.84 (Held-out)" },
+                { label: "AYURLEX RECALL@5", value: "0.81 (Held-out)" },
                 { label: "CINEMATCH RMSE", value: "0.871 (SVD)" },
                 { label: "TraffiQ R² SCORE", value: "0.89 (Accurate)" }
             ]
