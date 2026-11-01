@@ -75,10 +75,11 @@ const ResumeModal = ({ isOpen, onClose }) => {
         projects: {
             title: "NODE // INTEL_PROJECTS",
             subtitle: "FLAGSHIP AI & ML BUILDS",
-            summary: "Proven experience building and optimizing production-ready intelligent applications. Main builds cover weather-forecasting containerized MLOps pipelines (SkyFlow-MLOps), local LLM retrieval platforms (LoreLoop), autonomous analytical agents (EDAgent), CV-based traffic demand forecasting (TraffiQ), and a hybrid movie recommender system (CineMatch).",
+            summary: "Proven experience building and optimizing production-ready intelligent applications. Main builds cover weather-forecasting containerized MLOps pipelines (SkyFlow-MLOps), local LLM retrieval platforms (LoreLoop), autonomous analytical agents (EDAgent), CV-based traffic demand forecasting (TraffiQ), a hybrid movie recommender system (CineMatch), and a citation-grounded legal RAG assistant with a deterministic compliance compiler (AyurLex).",
             stats: [
                 { label: "MLOPS PIPELINE", value: "Airflow & MLflow" },
                 { label: "AGENT ORCHESTRA", value: "LangGraph (Modular)" },
+                { label: "AYURLEX RECALL@5", value: "0.84 (Held-out)" },
                 { label: "CINEMATCH RMSE", value: "0.871 (SVD)" },
                 { label: "TraffiQ R² SCORE", value: "0.89 (Accurate)" }
             ]

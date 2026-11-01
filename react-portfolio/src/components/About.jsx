@@ -35,6 +35,7 @@ Beyond code, I serve as a Mentor at InternWare, have represented institutions as
 const profile = new Developer({
   focus: ['Data Science', 'Machine Learning', 'MLOps', 'AI Development'],
   projects: [
+    'AyurLex',
     'TraffiQ', 
     'CineMatch',
     'LoreLoop',
