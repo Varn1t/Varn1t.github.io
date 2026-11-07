@@ -6,15 +6,16 @@ const Certificates = () => {
         { name: "GenAI Powered Data Analytics Job Simulation", issuer: "Tata", icon: <BrainIcon />, type: "SIMULATION" },
         { name: "Industrial Training in AI/ML", issuer: "Gradvation", icon: <CogIcon />, type: "TRAINEE" },
         { name: "Python for Data Science", issuer: "Great Learning", icon: <ChartIcon />, type: "CERTIFIED" },
-        { name: "Exploratory Data Analysis for ML", issuer: "IBM", icon: <DataIcon />, type: "CERTIFIED" },
-        { name: "Supervised Machine Learning: Regression", issuer: "IBM", icon: <ChartIcon />, type: "CERTIFIED" },
+        { name: "Exploratory Data Analysis for ML", issuer: "IBM", icon: <DataIcon />, type: "CERTIFIED", link: "https://coursera.org/share/7fa125cf4b10ec463536ceabc7b4ef86" },
+        { name: "Supervised Machine Learning: Regression", issuer: "IBM", icon: <ChartIcon />, type: "CERTIFIED", link: "https://coursera.org/share/b3717a4a602fb406f6361002682fe26b" },
+        { name: "Supervised Machine Learning: Classification", issuer: "IBM", icon: <ChartIcon />, type: "CERTIFIED", link: "https://coursera.org/share/9f28807cd2e4aaf72442fd4a933a984b" },
         { name: "Industry Engagement", issuer: "Microsoft", icon: <BuildingIcon />, type: "PARTICIPANT" },
         { name: "Hackathon Participant", issuer: "Multiple AI & Automation Events", icon: <TrophyIcon />, type: "COMPETITOR" },
         { name: "Model United Nations", issuer: "uMUNg · InternWare 2023", icon: <GlobeIcon />, type: "DELEGATE" }
     ];
 
     const leadershipData = [
-        "Mentor at InternWare — guiding peers in technical concepts",
+        "InternWare — Executive (2023-2024), Mentor (2025 - May 2026), guiding peers in technical concepts",
         "Hackathon Participant — competing in multiple AI & automation events",
         "Built multiple full ML workflows end-to-end — from data cleaning to deployment",
         "Tech President & House Captain — led technical initiatives at Summer Fields School"
@@ -67,7 +68,13 @@ const Certificates = () => {
                                     </div>
                                     <div className="badge-content">
                                         <div className="cert-icon">{cert.icon}</div>
-                                        <h4 className="cert-name">{cert.name}</h4>
+                                        <h4 className="cert-name">
+                                            {cert.link ? (
+                                                <a href={cert.link} target="_blank" rel="noopener noreferrer" className="cert-link">
+                                                    {cert.name}
+                                                </a>
+                                            ) : cert.name}
+                                        </h4>
                                         <p className="cert-issuer">{cert.issuer}</p>
 
                                         <div className="badge-footer">

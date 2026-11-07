@@ -11,7 +11,7 @@ const FILES = {
 
 I'm passionate about building intelligent systems that solve real-world problems. My journey spans Data Science, Machine Learning, and AI development. 
 
-Beyond code, I serve as a Mentor at InternWare, have represented institutions as a MUN delegate, and led as Tech President at Summer Fields School. 
+Beyond code, I previously served at InternWare as an Executive (2023-2024) and then Mentor (2025 - May 2026), have represented institutions as a MUN delegate, and led as Tech President at Summer Fields School.
 
 *I believe great engineers are also great communicators.*
 `
@@ -58,7 +58,7 @@ export default profile;`
         content: `class Varnit(Human):
     def get_offline_activities(self):
         return [
-            "Mentoring at InternWare",
+            "InternWare: Executive (2023-2024), Mentor (2025 - May 2026)",
             "Participating in Model UN",
             "Public Speaking",
             "Tech Leadership"

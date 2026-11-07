@@ -11,25 +11,31 @@ const Skills = () => {
         { name: "Java", prof: 40, angle: 88, color: "#f97316" },
 
         // Top Left (90 to 180) -> ML / AI Tools
-        { name: "Scikit-learn", prof: 85, angle: 105, color: "#3b82f6" },
-        { name: "NumPy / Pandas", prof: 88, angle: 125, color: "#ec4899" },
-        { name: "HuggingFace", prof: 78, angle: 145, color: "#ffcc00" },
-        { name: "YOLOv8 & OpenCV", prof: 75, angle: 165, color: "#14b8a6" },
-        { name: "LangChain / Graph", prof: 85, angle: 180, color: "#a855f7" },
+        { name: "Scikit-learn", prof: 85, angle: 96, color: "#3b82f6" },
+        { name: "NumPy / Pandas", prof: 88, angle: 107, color: "#ec4899" },
+        { name: "HuggingFace", prof: 78, angle: 118, color: "#ffcc00" },
+        { name: "YOLOv8 & OpenCV", prof: 75, angle: 129, color: "#14b8a6" },
+        { name: "LangChain / Graph", prof: 85, angle: 140, color: "#a855f7" },
+        { name: "PyTorch & CUDA", prof: 72, angle: 151, color: "#ee4c2c" },
+        { name: "Object Tracking", prof: 72, angle: 162, color: "#06b6d4" },
+        { name: "OCR & VLMs", prof: 70, angle: 173, color: "#facc15" },
 
         // Bottom Left (180 to 270) -> Web Dev
-        { name: "HTML / CSS", prof: 80, angle: 195, color: "#f43f5e" },
-        { name: "JavaScript", prof: 72, angle: 212, color: "#eab308" },
-        { name: "React", prof: 60, angle: 229, color: "#3b82f6" },
-        { name: "Streamlit", prof: 85, angle: 246, color: "#ff4b4b" },
-        { name: "Flask", prof: 65, angle: 263, color: "#64748b" },
+        { name: "HTML / CSS", prof: 80, angle: 192, color: "#f43f5e" },
+        { name: "JavaScript", prof: 72, angle: 207, color: "#eab308" },
+        { name: "React", prof: 60, angle: 222, color: "#3b82f6" },
+        { name: "Streamlit", prof: 85, angle: 237, color: "#ff4b4b" },
+        { name: "Flask", prof: 65, angle: 252, color: "#64748b" },
+        { name: "FastAPI", prof: 75, angle: 266, color: "#009688" },
 
         // Bottom Right (270 to 360) -> Tools & Env
-        { name: "Git / GitHub", prof: 85, angle: 285, color: "#a3e635" },
-        { name: "Docker & MLOps", prof: 82, angle: 298, color: "#2496ed" },
-        { name: "Botpress", prof: 70, angle: 310, color: "#d946ef" },
-        { name: "Jupyter / Colab", prof: 90, angle: 335, color: "#f97316" },
-        { name: "VS Code", prof: 90, angle: 355, color: "#0ea5e9" },
+        { name: "Git / GitHub", prof: 85, angle: 276, color: "#a3e635" },
+        { name: "Docker & MLOps", prof: 82, angle: 289, color: "#2496ed" },
+        { name: "Botpress", prof: 70, angle: 302, color: "#d946ef" },
+        { name: "Cloudflare", prof: 65, angle: 315, color: "#f38020" },
+        { name: "Bash / PowerShell", prof: 70, angle: 328, color: "#4eaa25" },
+        { name: "Jupyter / Colab", prof: 90, angle: 341, color: "#f97316" },
+        { name: "VS Code", prof: 90, angle: 354, color: "#0ea5e9" },
     ];
 
     const [hoveredSkill, setHoveredSkill] = useState(null);

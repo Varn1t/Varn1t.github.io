@@ -87,9 +87,9 @@ const ResumeModal = ({ isOpen, onClose }) => {
         leadership: {
             title: "NODE // SYNERGY_LEADERSHIP",
             subtitle: "INFLUENCE & TEAM DIRECTION",
-            summary: "Committed to mentoring and technical representation. Led school community as Tech President, mentored student innovators at InternWare, and represented institutions in competitive Model UN debates.",
+            summary: "Committed to mentoring and technical representation. Led school community as Tech President, served at InternWare as Executive (2023-2024) then Mentor (2025 - May 2026), and represented institutions in competitive Model UN debates.",
             stats: [
-                { label: "ROLE", value: "Mentor @ InternWare" },
+                { label: "ROLE", value: "Former Executive & Mentor @ InternWare" },
                 { label: "COMMUNITY", value: "School Tech President" },
                 { label: "SKILLS", value: "MUN Delegate, Public Speaking" }
             ]

@@ -2,13 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 const SUB_AGENTS = [
-    { id: 'ml', label: 'ML Engineering', tool: 'sklearn · pytorch', icon: 'cog', color: '#a855f7', logs: ['Training models...', 'Checkpoint saved ✓'] },
+    { id: 'ml', label: 'Computer Vision', tool: 'YOLO · OpenCV · PyTorch', icon: 'cog', color: '#a855f7', logs: ['Detecting objects...', 'Tracks saved ✓'] },
     { id: 'data', label: 'Data Pipelines', tool: 'pandas · airflow', icon: 'db', color: '#818cf8', logs: ['Ingesting telemetry...', 'Pipeline complete ✓'] },
-    { id: 'research', label: 'AI Research', tool: 'LLMs · RAG · Agents', icon: 'search', color: '#f472b6', logs: ['Querying knowledge base...', 'Report ready ✓'] },
+    { id: 'research', label: 'Document AI', tool: 'OCR · VLMs · RAG', icon: 'search', color: '#f472b6', logs: ['Reading documents...', 'Fields extracted ✓'] },
     { id: 'deploy', label: 'Model Deployment', tool: 'FastAPI · Docker', icon: 'rocket', color: '#34d399', logs: ['Building container...', 'Deployed ✅'] },
 ];
 
-const TECH_TAGS = ['Python', 'Machine Learning', 'LLMs', 'Data Pipelines', 'FastAPI'];
+const TECH_TAGS = ['Python', 'Computer Vision', 'Document AI', 'LLMs', 'FastAPI'];
 
 const LogStream = ({ logs, active }) => {
     const [count, setCount] = useState(0);
@@ -125,7 +125,7 @@ const Experience = () => (
                 >
                     <div className="exp-node-type exp-node-type--hero">ORCHESTRATOR</div>
                     <div className="exp-node-icon exp-node-icon--hero"><BrainSvg /></div>
-                    <div className="exp-node-label exp-node-label--hero">AI Intern</div>
+                    <div className="exp-node-label exp-node-label--hero">AIML Intern</div>
                     <div className="exp-node-name">Varnit Kalra</div>
                     <div className="exp-node-company">ITG Telematics Pvt. Ltd.</div>
                     <div className="exp-node-since">Aug 2026 → Present</div>

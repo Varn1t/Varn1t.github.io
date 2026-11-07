@@ -13,3 +13,13 @@ model_capabilities.yaml
 # OS
 .DS_Store
 Thumbs.db
+
+# AI tool folders
+.claude/
+.codex/
+.ai/
+.cursor/
+.windsurf/
+.obsidian/
+_drafts/
+*_last_context.md
