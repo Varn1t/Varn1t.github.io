@@ -6,9 +6,7 @@ const Certificates = () => {
         { name: "GenAI Powered Data Analytics Job Simulation", issuer: "Tata", icon: <BrainIcon />, type: "SIMULATION" },
         { name: "Industrial Training in AI/ML", issuer: "Gradvation", icon: <CogIcon />, type: "TRAINEE" },
         { name: "Python for Data Science", issuer: "Great Learning", icon: <ChartIcon />, type: "CERTIFIED" },
-        { name: "Exploratory Data Analysis for ML", issuer: "IBM", icon: <DataIcon />, type: "CERTIFIED", link: "https://coursera.org/share/7fa125cf4b10ec463536ceabc7b4ef86" },
-        { name: "Supervised Machine Learning: Regression", issuer: "IBM", icon: <ChartIcon />, type: "CERTIFIED", link: "https://coursera.org/share/b3717a4a602fb406f6361002682fe26b" },
-        { name: "Supervised Machine Learning: Classification", issuer: "IBM", icon: <ChartIcon />, type: "CERTIFIED", link: "https://coursera.org/share/9f28807cd2e4aaf72442fd4a933a984b" },
+        { name: "IBM Machine Learning Professional Certificate", issuer: "IBM", icon: <DataIcon />, type: "CERTIFIED", link: "https://coursera.org/share/fc1b168586978d913a5712387030df18" },
         { name: "Industry Engagement", issuer: "Microsoft", icon: <BuildingIcon />, type: "PARTICIPANT" },
         { name: "Hackathon Participant", issuer: "Multiple AI & Automation Events", icon: <TrophyIcon />, type: "COMPETITOR" },
         { name: "Model United Nations", issuer: "uMUNg · InternWare 2023", icon: <GlobeIcon />, type: "DELEGATE" }
