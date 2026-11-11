@@ -4,38 +4,38 @@ import { motion, AnimatePresence } from 'framer-motion';
 const Skills = () => {
     const radarSkills = [
         // Top Right (0 to 90) -> Languages
-        { name: "Python", prof: 92, angle: 15, color: "#eab308" },
-        { name: "PostgreSQL", prof: 70, angle: 35, color: "#336791" },
-        { name: "MySQL", prof: 70, angle: 55, color: "#22c55e" },
-        { name: "C / C++", prof: 65, angle: 75, color: "#9ca3af" },
-        { name: "Java", prof: 40, angle: 88, color: "#f97316" },
+        { name: "Python", prof: 92, angle: 15, color: "#eab308", projects: ["AyurLex", "TraffiQ", "SkyFlow-MLOps", "EDAgent", "LoreLoop", "CineMatch"] },
+        { name: "PostgreSQL", prof: 70, angle: 35, color: "#336791", projects: ["Crime Record Management"] },
+        { name: "MySQL", prof: 70, angle: 55, color: "#22c55e", projects: [] },
+        { name: "C / C++", prof: 65, angle: 75, color: "#9ca3af", projects: [] },
+        { name: "Java", prof: 40, angle: 88, color: "#f97316", projects: [] },
 
         // Top Left (90 to 180) -> ML / AI Tools
-        { name: "Scikit-learn", prof: 85, angle: 96, color: "#3b82f6" },
-        { name: "NumPy / Pandas", prof: 88, angle: 107, color: "#ec4899" },
-        { name: "HuggingFace", prof: 78, angle: 118, color: "#ffcc00" },
-        { name: "YOLOv8 & OpenCV", prof: 75, angle: 129, color: "#14b8a6" },
-        { name: "LangChain / Graph", prof: 85, angle: 140, color: "#a855f7" },
-        { name: "PyTorch & CUDA", prof: 72, angle: 151, color: "#ee4c2c" },
-        { name: "Object Tracking", prof: 72, angle: 162, color: "#06b6d4" },
-        { name: "OCR & VLMs", prof: 70, angle: 173, color: "#facc15" },
+        { name: "Scikit-learn", prof: 85, angle: 96, color: "#3b82f6", projects: ["SkyFlow-MLOps", "CineMatch", "Car Price Prediction", "House Price Prediction"] },
+        { name: "NumPy / Pandas", prof: 88, angle: 107, color: "#ec4899", projects: ["CineMatch", "Student Performance EDA"] },
+        { name: "HuggingFace", prof: 78, angle: 118, color: "#ffcc00", projects: [] },
+        { name: "YOLOv8 & OpenCV", prof: 75, angle: 129, color: "#14b8a6", projects: ["TraffiQ"] },
+        { name: "LangChain / Graph", prof: 85, angle: 140, color: "#a855f7", projects: ["EDAgent", "LoreLoop"] },
+        { name: "PyTorch & CUDA", prof: 72, angle: 151, color: "#ee4c2c", projects: [] },
+        { name: "Object Tracking", prof: 72, angle: 162, color: "#06b6d4", projects: ["TraffiQ"] },
+        { name: "OCR & VLMs", prof: 70, angle: 173, color: "#facc15", projects: [] },
 
         // Bottom Left (180 to 270) -> Web Dev
-        { name: "HTML / CSS", prof: 80, angle: 192, color: "#f43f5e" },
-        { name: "JavaScript", prof: 72, angle: 207, color: "#eab308" },
-        { name: "React", prof: 60, angle: 222, color: "#3b82f6" },
-        { name: "Streamlit", prof: 85, angle: 237, color: "#ff4b4b" },
-        { name: "Flask", prof: 65, angle: 252, color: "#64748b" },
-        { name: "FastAPI", prof: 75, angle: 266, color: "#009688" },
+        { name: "HTML / CSS", prof: 80, angle: 192, color: "#f43f5e", projects: [] },
+        { name: "JavaScript", prof: 72, angle: 207, color: "#eab308", projects: [] },
+        { name: "React", prof: 60, angle: 222, color: "#3b82f6", projects: [] },
+        { name: "Streamlit", prof: 85, angle: 237, color: "#ff4b4b", projects: ["EDAgent", "LoreLoop", "CineMatch"] },
+        { name: "Flask", prof: 65, angle: 252, color: "#64748b", projects: ["TraffiQ", "Car Price Prediction"] },
+        { name: "FastAPI", prof: 75, angle: 266, color: "#009688", projects: ["AyurLex"] },
 
         // Bottom Right (270 to 360) -> Tools & Env
-        { name: "Git / GitHub", prof: 85, angle: 276, color: "#a3e635" },
-        { name: "Docker & MLOps", prof: 82, angle: 289, color: "#2496ed" },
-        { name: "Botpress", prof: 70, angle: 302, color: "#d946ef" },
-        { name: "Cloudflare", prof: 65, angle: 315, color: "#f38020" },
-        { name: "Bash / PowerShell", prof: 70, angle: 328, color: "#4eaa25" },
-        { name: "Jupyter / Colab", prof: 90, angle: 341, color: "#f97316" },
-        { name: "VS Code", prof: 90, angle: 354, color: "#0ea5e9" },
+        { name: "Git / GitHub", prof: 85, angle: 276, color: "#a3e635", projects: [] },
+        { name: "Docker & MLOps", prof: 82, angle: 289, color: "#2496ed", projects: ["AyurLex", "SkyFlow-MLOps"] },
+        { name: "Botpress", prof: 70, angle: 302, color: "#d946ef", projects: [] },
+        { name: "Cloudflare", prof: 65, angle: 315, color: "#f38020", projects: [] },
+        { name: "Bash / PowerShell", prof: 70, angle: 328, color: "#4eaa25", projects: [] },
+        { name: "Jupyter / Colab", prof: 90, angle: 341, color: "#f97316", projects: ["House Price Prediction", "Student Performance EDA"] },
+        { name: "VS Code", prof: 90, angle: 354, color: "#0ea5e9", projects: [] },
     ];
 
     const [hoveredSkill, setHoveredSkill] = useState(null);
@@ -155,6 +155,16 @@ const Skills = () => {
                                             </div>
                                             <span className="stat-value">{radarSkills[hoveredSkill].prof}%</span>
                                         </div>
+                                        {radarSkills[hoveredSkill].projects.length > 0 && (
+                                            <div className="target-stat">
+                                                <span className="stat-label">USED IN</span>
+                                                <div className="linked-projects">
+                                                    {radarSkills[hoveredSkill].projects.map((p, i) => (
+                                                        <a key={i} href="#projects" className="linked-project-chip">{p}</a>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
                                     </motion.div>
                                 ) : (
                                     <motion.div

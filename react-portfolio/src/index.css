@@ -2604,6 +2604,27 @@ a {
   color: #e5e7eb;
 }
 
+.linked-projects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.linked-project-chip {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #a3e635;
+  border: 1px solid rgba(163, 230, 53, 0.4);
+  border-radius: 4px;
+  padding: 0.2rem 0.5rem;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.linked-project-chip:hover {
+  background: rgba(163, 230, 53, 0.15);
+}
+
 .prof-bar-wrapper {
   width: 100%;
   height: 6px;
