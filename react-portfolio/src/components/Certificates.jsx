@@ -3,13 +3,14 @@ import { motion } from 'framer-motion';
 
 const Certificates = () => {
     const certsData = [
+        { name: "IBM Machine Learning Professional Certificate", issuer: "IBM", icon: <DataIcon />, type: "CERTIFIED", link: "https://coursera.org/share/fc1b168586978d913a5712387030df18" },
+        { name: "AWS Cloud Technical Essentials", issuer: "AWS", icon: <CloudIcon />, type: "CERTIFIED", link: "https://coursera.org/share/c5684ec2f6f94f9c7924b497d587ae3a" },
         { name: "GenAI Powered Data Analytics Job Simulation", issuer: "Tata", icon: <BrainIcon />, type: "SIMULATION" },
         { name: "Industrial Training in AI/ML", issuer: "Gradvation", icon: <CogIcon />, type: "TRAINEE" },
         { name: "Python for Data Science", issuer: "Great Learning", icon: <ChartIcon />, type: "CERTIFIED" },
-        { name: "IBM Machine Learning Professional Certificate", issuer: "IBM", icon: <DataIcon />, type: "CERTIFIED", link: "https://coursera.org/share/fc1b168586978d913a5712387030df18" },
         { name: "Industry Engagement", issuer: "Microsoft", icon: <BuildingIcon />, type: "PARTICIPANT" },
         { name: "Hackathon Participant", issuer: "Multiple AI & Automation Events", icon: <TrophyIcon />, type: "COMPETITOR" },
-        { name: "Model United Nations", issuer: "uMUNg · InternWare 2023", icon: <GlobeIcon />, type: "DELEGATE" }
+        { name: "Model United Nations", issuer: "Delegate, 2023", icon: <GlobeIcon />, type: "DELEGATE" }
     ];
 
     const leadershipData = [
@@ -166,6 +167,11 @@ const GlobeIcon = () => (
     <svg className="cert-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" />
         <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+    </svg>
+);
+const CloudIcon = () => (
+    <svg className="cert-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M17.5 19H9a7 7 0 1 1 6.71-9h.79a4.5 4.5 0 1 1 0 9Z" />
     </svg>
 );
 const DataIcon = () => (

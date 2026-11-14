@@ -34,7 +34,7 @@ const Education = () => {
                             </div>
                             <h3 className="tl-title">Bachelor of Technology (CSE)</h3>
                             <div className="tl-institution">
-                                <MapPinIcon /> Institute of Information Technology &amp; Management, Janakpuri
+                                <MapPinIcon /> IITM Group of Institutions, Janakpuri
                             </div>
                             <div className="tl-stats">
                                 <div className="tl-stat">

@@ -28,13 +28,16 @@ const Skills = () => {
         { name: "Flask", prof: 65, angle: 252, color: "#64748b", projects: ["TraffiQ", "Car Price Prediction"] },
         { name: "FastAPI", prof: 75, angle: 266, color: "#009688", projects: ["AyurLex"] },
 
-        // Bottom Right (270 to 360) -> Tools & Env
+        // Bottom Right (270 to 360) -> Tools & Env (+ Cloud)
         { name: "Git / GitHub", prof: 85, angle: 276, color: "#a3e635", projects: [] },
-        { name: "Docker & MLOps", prof: 82, angle: 289, color: "#2496ed", projects: ["AyurLex", "SkyFlow-MLOps"] },
-        { name: "Botpress", prof: 70, angle: 302, color: "#d946ef", projects: [] },
-        { name: "Cloudflare", prof: 65, angle: 315, color: "#f38020", projects: [] },
-        { name: "Bash / PowerShell", prof: 70, angle: 328, color: "#4eaa25", projects: [] },
-        { name: "Jupyter / Colab", prof: 90, angle: 341, color: "#f97316", projects: ["House Price Prediction", "Student Performance EDA"] },
+        { name: "Docker & MLOps", prof: 82, angle: 285, color: "#2496ed", projects: ["AyurLex", "SkyFlow-MLOps"] },
+        { name: "AWS (EC2 / S3 / IAM)", prof: 68, angle: 293, color: "#FF9900", projects: [] },
+        { name: "Cloud Infrastructure (VPC)", prof: 65, angle: 302, color: "#38bdf8", projects: [] },
+        { name: "Cloud Security", prof: 62, angle: 311, color: "#ef4444", projects: [] },
+        { name: "Botpress", prof: 70, angle: 319, color: "#d946ef", projects: [] },
+        { name: "Cloudflare", prof: 65, angle: 328, color: "#f38020", projects: [] },
+        { name: "Bash / PowerShell", prof: 70, angle: 337, color: "#4eaa25", projects: [] },
+        { name: "Jupyter / Colab", prof: 90, angle: 345, color: "#f97316", projects: ["House Price Prediction", "Student Performance EDA"] },
         { name: "VS Code", prof: 90, angle: 354, color: "#0ea5e9", projects: [] },
     ];
 

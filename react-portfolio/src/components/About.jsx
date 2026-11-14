@@ -21,7 +21,7 @@ Beyond code, I previously served at InternWare as an Executive (2023-2024) and t
         lang: 'json',
         content: `{
   "degree": "B.Tech Computer Science Engineering",
-  "institution": "Institute of Information Technology & Management",
+  "institution": "IITM Group of Institutions",
   "location": "Janakpuri, India",
   "graduation": "August 2027",
   "status": "In Progress"

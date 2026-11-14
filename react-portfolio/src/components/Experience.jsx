@@ -8,7 +8,7 @@ const SUB_AGENTS = [
     { id: 'deploy', label: 'Model Deployment', tool: 'FastAPI · Docker', icon: 'rocket', color: '#34d399', logs: ['Building container...', 'Deployed ✅'] },
 ];
 
-const TECH_TAGS = ['Python', 'Computer Vision', 'Document AI', 'LLMs', 'FastAPI'];
+const TECH_TAGS = ['Python', 'Computer Vision', 'Document AI', 'LLMs', 'FastAPI', 'AWS', 'Cloudflare'];
 
 const LogStream = ({ logs, active }) => {
     const [count, setCount] = useState(0);

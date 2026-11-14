@@ -68,7 +68,7 @@ const ResumeModal = ({ isOpen, onClose }) => {
             summary: "B.Tech Computer Science Engineering (August 2023 - August 2027). Currently building statistical, analytical, and computational foundations with high focus on Machine Learning & Artificial Intelligence architectures.",
             stats: [
                 { label: "CURRENT GPA", value: "8.3 / 10.0" },
-                { label: "AFFILIATION", value: "IITM, Janakpuri" },
+                { label: "AFFILIATION", value: "IITM Group of Institutions, Janakpuri" },
                 { label: "GRADUATION", value: "August 2027" }
             ]
         },
