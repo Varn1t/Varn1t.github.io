@@ -10,7 +10,7 @@ const Certificates = () => {
         { name: "Python for Data Science", issuer: "Great Learning", icon: <ChartIcon />, type: "CERTIFIED" },
         { name: "Industry Engagement", issuer: "Microsoft", icon: <BuildingIcon />, type: "PARTICIPANT" },
         { name: "Hackathon Participant", issuer: "Multiple AI & Automation Events", icon: <TrophyIcon />, type: "COMPETITOR" },
-        { name: "Model United Nations", issuer: "Delegate, 2023", icon: <GlobeIcon />, type: "DELEGATE" }
+        { name: "Model United Nations", issuer: "Delegate", icon: <GlobeIcon />, type: "DELEGATE" }
     ];
 
     const leadershipData = [
