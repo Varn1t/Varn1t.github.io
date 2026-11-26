@@ -1,114 +1,59 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
+const COMMAND = 'building intelligent systems';
+const TYPE_MS = 55;
+const START_MS = 400;
+const REDUCED = typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+// the name and role fade in once the command has finished typing
+const REVEAL = REDUCED ? 0 : (START_MS + COMMAND.length * TYPE_MS) / 1000 + 0.15;
+
 const Hero = ({ onOpenResume }) => {
+    const [typed, setTyped] = useState(REDUCED ? COMMAND.length : 0);
+
+    useEffect(() => {
+        if (REDUCED) return;
+        let timer;
+        const start = setTimeout(() => {
+            timer = setInterval(() => {
+                setTyped(n => {
+                    if (n + 1 >= COMMAND.length) clearInterval(timer);
+                    return n + 1;
+                });
+            }, TYPE_MS);
+        }, START_MS);
+        return () => { clearTimeout(start); clearInterval(timer); };
+    }, []);
+
+    const fade = delay => ({
+        initial: { opacity: 0, y: 16 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.6, delay: REVEAL + delay },
+    });
+
     return (
         <section className="hero-workspace" id="hero">
-            {/* Scattered desk objects */}
-            <div className="desk-objects">
-                <motion.img
-                    src="/assets/sticky-ml.png"
-                    alt="ML Engineer sticky note"
-                    className="desk-obj sticky-1"
-                    initial={{ opacity: 0, scale: 0.5, rotate: -12 }}
-                    animate={{ opacity: 1, scale: 1, rotate: -12, y: [0, -8, 0] }}
-                    transition={{ duration: 0.8, delay: 0.3, y: { duration: 4, repeat: Infinity, ease: "easeInOut" } }}
-                />
-                <motion.img
-                    src="/assets/sticky-ai.png"
-                    alt="AI Developer sticky note"
-                    className="desk-obj sticky-2"
-                    initial={{ opacity: 0, scale: 0.5, rotate: 8 }}
-                    animate={{ opacity: 1, scale: 1, rotate: 8, y: [0, -6, 0] }}
-                    transition={{ duration: 0.8, delay: 0.5, y: { duration: 5, repeat: Infinity, ease: "easeInOut" } }}
-                />
-                <motion.img
-                    src="/assets/code-terminal.png"
-                    alt="Code terminal"
-                    className="desk-obj terminal-obj"
-                    initial={{ opacity: 0, x: -60 }}
-                    animate={{ opacity: 1, x: 0, y: [0, -10, 0] }}
-                    transition={{ duration: 0.8, delay: 0.7, y: { duration: 6, repeat: Infinity, ease: "easeInOut" } }}
-                />
-                <motion.img
-                    src="/assets/headphones.png"
-                    alt="Headphones"
-                    className="desk-obj headphones-obj"
-                    initial={{ opacity: 0, x: 60 }}
-                    animate={{ opacity: 1, x: 0, y: [0, -7, 0] }}
-                    transition={{ duration: 0.8, delay: 0.9, y: { duration: 5.5, repeat: Infinity, ease: "easeInOut" } }}
-                />
-                <motion.img
-                    src="/assets/coffee-cup.png"
-                    alt="Coffee cup"
-                    className="desk-obj coffee-obj"
-                    initial={{ opacity: 0, scale: 0.6 }}
-                    animate={{ opacity: 1, scale: 1, y: [0, -5, 0] }}
-                    transition={{ duration: 0.8, delay: 1.1, y: { duration: 4.5, repeat: Infinity, ease: "easeInOut" } }}
-                />
-                <motion.img
-                    src="/assets/data-chart.png"
-                    alt="Data chart"
-                    className="desk-obj chart-obj"
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1, rotate: 5, y: [0, -9, 0] }}
-                    transition={{ duration: 0.8, delay: 0.6, y: { duration: 5, repeat: Infinity, ease: "easeInOut" } }}
-                />
-                <motion.img
-                    src="/assets/dev-glasses.png"
-                    alt="Developer glasses"
-                    className="desk-obj glasses-obj"
-                    initial={{ opacity: 0, scale: 0.6, rotate: -5 }}
-                    animate={{ opacity: 1, scale: 1, rotate: -5, y: [0, -6, 0] }}
-                    transition={{ duration: 0.8, delay: 0.8, y: { duration: 4.8, repeat: Infinity, ease: "easeInOut" } }}
-                />
-                <motion.img
-                    src="/assets/cyber-mouse.png"
-                    alt="Cybernetic developer mouse"
-                    className="desk-obj mouse-obj"
-                    initial={{ opacity: 0, scale: 0.5, rotate: 15 }}
-                    animate={{ opacity: 1, scale: 1, rotate: 15, y: [0, -8, 0] }}
-                    transition={{ duration: 0.8, delay: 1.0, y: { duration: 5.2, repeat: Infinity, ease: "easeInOut" } }}
-                />
-                <motion.img
-                    src="/assets/neural-core.png"
-                    alt="Futuristic neural core"
-                    className="desk-obj neural-core-obj"
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1, y: [0, -12, 0] }}
-                    transition={{ duration: 0.9, delay: 1.2, y: { duration: 5.8, repeat: Infinity, ease: "easeInOut" } }}
-                />
-            </div>
-
-            {/* Main hero content */}
             <div className="hero-center">
-                <motion.h1
-                    className="hero-title"
-                    initial={{ opacity: 0, y: 40 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                >
-                    WELCOME TO<br />
-                    <span className="hero-title-accent">VARNIT'S</span> PORTFOLIO
+                <p className="hero-prompt" aria-label={`varnit@kalra: ${COMMAND}`}>
+                    <span className="hero-prompt-user">varnit@kalra</span>
+                    <span className="hero-prompt-path">:~$</span>{' '}
+                    <span className="hero-prompt-cmd">{COMMAND.slice(0, typed)}</span>
+                    <span className="hero-prompt-caret blink" aria-hidden="true">▌</span>
+                </p>
+
+                <motion.h1 className="hero-title" {...fade(0)}>
+                    Varnit <span className="hero-title-accent">Kalra</span>
                 </motion.h1>
 
+                <motion.p className="hero-role" {...fade(0.15)}>
+                    AIML Intern @ ITG Telematics — building document AI, computer vision and LLM agents.
+                </motion.p>
+
                 <div className="hero-ctas">
-                    <motion.a
-                        href="#projects"
-                        className="hero-cta"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.6 }}
-                    >
+                    <motion.a href="#projects" className="hero-cta" {...fade(0.3)}>
                         View Projects
                     </motion.a>
-                    <motion.button
-                        onClick={onOpenResume}
-                        className="hero-cta secondary-cta"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.7 }}
-                    >
+                    <motion.button onClick={onOpenResume} className="hero-cta secondary-cta" {...fade(0.4)}>
                         View Resume
                     </motion.button>
                 </div>

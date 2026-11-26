@@ -1,45 +1,78 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// One list per radar quadrant (from the GitHub profile README tech stack).
+// Angles are spread evenly inside each quadrant, so adding a skill needs no hand-placed angle.
+const QUADRANTS = [
+    ['Languages & Data', [
+        { name: "Python", color: "#eab308", projects: ["AyurLex", "TraffiQ", "SkyFlow-MLOps", "EDAgent", "LoreLoop", "CineMatch"] },
+        { name: "JavaScript", color: "#f7df1e", projects: [] },
+        { name: "TypeScript", color: "#3178c6", projects: [] },
+        { name: "Java", color: "#f97316", projects: [] },
+        { name: "C / C++", color: "#9ca3af", projects: [] },
+        { name: "PostgreSQL", color: "#336791", projects: ["Crime Record Management"] },
+        { name: "MySQL", color: "#4479a1", projects: [] },
+        { name: "MongoDB", color: "#4ea94b", projects: [] },
+        { name: "SQLite", color: "#0ea5e9", projects: [] },
+    ]],
+    ['ML & AI', [
+        { name: "Scikit-learn", color: "#f7931e", projects: ["SkyFlow-MLOps", "CineMatch"] },
+        { name: "NumPy / Pandas", color: "#ec4899", projects: ["CineMatch", "EDAgent", "Student Performance EDA"] },
+        { name: "SciPy", color: "#0c55a5", projects: [] },
+        { name: "PyTorch & CUDA", color: "#ee4c2c", projects: [] },
+        { name: "TensorFlow / Keras", color: "#ff6f00", projects: [] },
+        { name: "Hugging Face", color: "#ffd21e", projects: [] },
+        { name: "YOLOv8 / Ultralytics", color: "#14b8a6", projects: ["TraffiQ"] },
+        { name: "OpenCV", color: "#5c3ee8", projects: ["TraffiQ"] },
+        { name: "Object Tracking", color: "#06b6d4", projects: ["TraffiQ"] },
+        { name: "OCR & VLMs", color: "#facc15", projects: [] },
+        { name: "PyMuPDF", color: "#6366f1", projects: [] },
+        { name: "LangChain / LangGraph", color: "#a855f7", projects: ["EDAgent", "LoreLoop", "SkyFlow-MLOps"] },
+        { name: "FAISS", color: "#0467df", projects: ["LoreLoop"] },
+        { name: "Ollama", color: "#e5e7eb", projects: ["AyurLex", "SkyFlow-MLOps", "LoreLoop"] },
+        { name: "MLflow", color: "#0194e2", projects: ["SkyFlow-MLOps"] },
+    ]],
+    ['Web & Viz', [
+        { name: "HTML / CSS", color: "#f43f5e", projects: [] },
+        { name: "React", color: "#61dafb", projects: [] },
+        { name: "FastAPI", color: "#009688", projects: ["AyurLex", "SkyFlow-MLOps"] },
+        { name: "Flask", color: "#94a3b8", projects: ["TraffiQ"] },
+        { name: "Uvicorn", color: "#499848", projects: [] },
+        { name: "Pydantic", color: "#e92063", projects: [] },
+        { name: "Streamlit", color: "#ff4b4b", projects: ["LoreLoop", "CineMatch"] },
+        { name: "Matplotlib / Seaborn", color: "#4c72b0", projects: ["EDAgent", "Student Performance EDA"] },
+        { name: "Plotly", color: "#7c86c4", projects: ["CineMatch"] },
+        { name: "Chart.js", color: "#f5788d", projects: ["TraffiQ"] },
+    ]],
+    ['Tools & Cloud', [
+        { name: "Git / GitHub", color: "#f05033", projects: [] },
+        { name: "Docker", color: "#2496ed", projects: ["AyurLex", "SkyFlow-MLOps"] },
+        { name: "Apache Airflow", color: "#017cee", projects: ["SkyFlow-MLOps"] },
+        { name: "AWS (EC2 / S3 / IAM)", color: "#ff9900", projects: [] },
+        { name: "Cloud Security & VPC", color: "#ef4444", projects: [] },
+        { name: "Cloudflare", color: "#f38020", projects: [] },
+        { name: "Vercel", color: "#d4d4d8", projects: [] },
+        { name: "Bash / PowerShell", color: "#4eaa25", projects: [] },
+        { name: "Pytest", color: "#2f9fe3", projects: [] },
+        { name: "Jupyter / Colab", color: "#f97316", projects: ["Student Performance EDA"] },
+        { name: "Botpress", color: "#d946ef", projects: [] },
+        { name: "Figma / Photoshop", color: "#a259ff", projects: [] },
+        { name: "Blender", color: "#f5792a", projects: [] },
+        { name: "Notion", color: "#e5e5e5", projects: [] },
+        { name: "Jira / Confluence", color: "#2684ff", projects: [] },
+    ]],
+];
+const RADAR_SKILLS = QUADRANTS.flatMap(([category, skills], q) =>
+    skills.map((sk, i) => ({
+        ...sk,
+        category,
+        angle: q * 90 + 5 + (80 * i) / Math.max(1, skills.length - 1),
+        slot: i, // which ring: consecutive skills alternate rings
+    })));
+const CATEGORIES = QUADRANTS.map(([c]) => c);
+
 const Skills = () => {
-    const radarSkills = [
-        // Top Right (0 to 90) -> Languages
-        { name: "Python", prof: 92, angle: 15, color: "#eab308", projects: ["AyurLex", "TraffiQ", "SkyFlow-MLOps", "EDAgent", "LoreLoop", "CineMatch"] },
-        { name: "PostgreSQL", prof: 70, angle: 35, color: "#336791", projects: ["Crime Record Management"] },
-        { name: "MySQL", prof: 70, angle: 55, color: "#22c55e", projects: [] },
-        { name: "C / C++", prof: 65, angle: 75, color: "#9ca3af", projects: [] },
-        { name: "Java", prof: 40, angle: 88, color: "#f97316", projects: [] },
-
-        // Top Left (90 to 180) -> ML / AI Tools
-        { name: "Scikit-learn", prof: 85, angle: 96, color: "#3b82f6", projects: ["SkyFlow-MLOps", "CineMatch", "Car Price Prediction", "House Price Prediction"] },
-        { name: "NumPy / Pandas", prof: 88, angle: 107, color: "#ec4899", projects: ["CineMatch", "Student Performance EDA"] },
-        { name: "HuggingFace", prof: 78, angle: 118, color: "#ffcc00", projects: [] },
-        { name: "YOLOv8 & OpenCV", prof: 75, angle: 129, color: "#14b8a6", projects: ["TraffiQ"] },
-        { name: "LangChain / Graph", prof: 85, angle: 140, color: "#a855f7", projects: ["EDAgent", "LoreLoop"] },
-        { name: "PyTorch & CUDA", prof: 72, angle: 151, color: "#ee4c2c", projects: [] },
-        { name: "Object Tracking", prof: 72, angle: 162, color: "#06b6d4", projects: ["TraffiQ"] },
-        { name: "OCR & VLMs", prof: 70, angle: 173, color: "#facc15", projects: [] },
-
-        // Bottom Left (180 to 270) -> Web Dev
-        { name: "HTML / CSS", prof: 80, angle: 192, color: "#f43f5e", projects: [] },
-        { name: "JavaScript", prof: 72, angle: 207, color: "#eab308", projects: [] },
-        { name: "React", prof: 60, angle: 222, color: "#3b82f6", projects: [] },
-        { name: "Streamlit", prof: 85, angle: 237, color: "#ff4b4b", projects: ["EDAgent", "LoreLoop", "CineMatch"] },
-        { name: "Flask", prof: 65, angle: 252, color: "#64748b", projects: ["TraffiQ", "Car Price Prediction"] },
-        { name: "FastAPI", prof: 75, angle: 266, color: "#009688", projects: ["AyurLex"] },
-
-        // Bottom Right (270 to 360) -> Tools & Env (+ Cloud)
-        { name: "Git / GitHub", prof: 85, angle: 276, color: "#a3e635", projects: [] },
-        { name: "Docker & MLOps", prof: 82, angle: 285, color: "#2496ed", projects: ["AyurLex", "SkyFlow-MLOps"] },
-        { name: "AWS (EC2 / S3 / IAM)", prof: 68, angle: 293, color: "#FF9900", projects: [] },
-        { name: "Cloud Infrastructure (VPC)", prof: 65, angle: 302, color: "#38bdf8", projects: [] },
-        { name: "Cloud Security", prof: 62, angle: 311, color: "#ef4444", projects: [] },
-        { name: "Botpress", prof: 70, angle: 319, color: "#d946ef", projects: [] },
-        { name: "Cloudflare", prof: 65, angle: 328, color: "#f38020", projects: [] },
-        { name: "Bash / PowerShell", prof: 70, angle: 337, color: "#4eaa25", projects: [] },
-        { name: "Jupyter / Colab", prof: 90, angle: 345, color: "#f97316", projects: ["House Price Prediction", "Student Performance EDA"] },
-        { name: "VS Code", prof: 90, angle: 354, color: "#0ea5e9", projects: [] },
-    ];
+    const radarSkills = RADAR_SKILLS;
 
     const [hoveredSkill, setHoveredSkill] = useState(null);
     const [filter, setFilter] = useState(null); // category name or null
@@ -56,8 +89,8 @@ const Skills = () => {
             const m = getComputedStyle(sweepRef.current).transform;
             if (m && m !== 'none') {
                 const [a, b] = m.slice(7, -1).split(',').map(Number);
-                // leading edge of the sweep wedge points straight down (90deg) at rotation 0
-                const edge = ((Math.atan2(b, a) * 180) / Math.PI + 90 + 360) % 360;
+                // the sweep's bright leading edge points straight up (270deg clockwise from +x) at rotation 0
+                const edge = ((Math.atan2(b, a) * 180) / Math.PI + 270 + 360) % 360;
                 if (prev !== null) {
                     screenAngle.forEach((ang, i) => {
                         const passed = prev <= edge ? ang > prev && ang <= edge : ang > prev || ang <= edge;
@@ -77,25 +110,19 @@ const Skills = () => {
         return () => cancelAnimationFrame(raf);
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const getCoordinates = (angleDegrees, proficiency) => {
-        // Center is expert (100%), Edge is beginner (0%)
-        // So distance represents how much they have left to learn.
-        // We cap it so they aren't on the extreme edge bounding box boundaries.
-        const distance = ((100 - proficiency) / 100) * 42;
+    // Spread blips out: each skill keeps its angle, and consecutive skills in a quadrant
+    // alternate between three rings so neighbours never sit on top of each other.
+    const RINGS = [16, 24, 32, 40]; // % of the board from the centre
+    const getCoordinates = (angleDegrees, ringIndex) => {
+        const distance = RINGS[ringIndex % RINGS.length];
         const angleRadian = (angleDegrees * Math.PI) / 180;
         const x = 50 + distance * Math.cos(angleRadian);
         const y = 50 - distance * Math.sin(angleRadian); // web y is inverted
         return { left: `${x}%`, top: `${y}%` };
     };
 
-    const getCategory = (angle) => {
-        if (angle >= 0 && angle < 90) return "Core Languages";
-        if (angle >= 90 && angle < 180) return "ML & AI Tools";
-        if (angle >= 180 && angle < 270) return "Web Development";
-        return "Dev Environment";
-    };
+    const getCategory = (angle) => CATEGORIES[Math.min(3, Math.floor(((angle % 360) + 360) % 360 / 90))];
 
-    const CATEGORIES = ['Core Languages', 'ML & AI Tools', 'Web Development', 'Dev Environment'];
     const toggle = cat => setFilter(f => (f === cat ? null : cat));
 
     // clicking empty radar space filters to the quadrant you clicked
@@ -156,9 +183,9 @@ const Skills = () => {
 
                         {/* Blips */}
                         {radarSkills.map((skill, idx) => {
-                            const coords = getCoordinates(skill.angle, skill.prof);
+                            const coords = getCoordinates(skill.angle, skill.slot);
                             const isHovered = hoveredSkill === idx;
-                            const dimmed = filter && getCategory(skill.angle) !== filter;
+                            const dimmed = filter && skill.category !== filter;
                             return (
                                 <div
                                     key={idx}
@@ -205,20 +232,7 @@ const Skills = () => {
                                         </h3>
                                         <div className="target-stat">
                                             <span className="stat-label">CATEGORY</span>
-                                            <span className="stat-value">{getCategory(radarSkills[hoveredSkill].angle)}</span>
-                                        </div>
-                                        <div className="target-stat">
-                                            <span className="stat-label">PROFICIENCY</span>
-                                            <div className="prof-bar-wrapper">
-                                                <div
-                                                    className="prof-bar-fill"
-                                                    style={{
-                                                        width: `${radarSkills[hoveredSkill].prof}%`,
-                                                        backgroundColor: radarSkills[hoveredSkill].color
-                                                    }}
-                                                ></div>
-                                            </div>
-                                            <span className="stat-value">{radarSkills[hoveredSkill].prof}%</span>
+                                            <span className="stat-value">{radarSkills[hoveredSkill].category}</span>
                                         </div>
                                         {radarSkills[hoveredSkill].projects.length > 0 && (
                                             <div className="target-stat">

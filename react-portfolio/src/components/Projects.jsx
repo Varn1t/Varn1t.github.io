@@ -1,12 +1,185 @@
-import React, { useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, useAnimationControls, useMotionValue } from 'framer-motion';
+
+// Retro sound effects, synthesised with Web Audio (no audio files). Only played after the
+// visitor turns sound on, which also satisfies the browser's user-gesture rule for audio.
+let audioCtx, master;
+// Everything goes through one quiet master gain and a low-pass filter, so nothing is sharp or piercing.
+const ac = () => {
+    if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const lp = audioCtx.createBiquadFilter();
+        lp.type = 'lowpass'; lp.frequency.value = 1800;
+        master = audioCtx.createGain(); master.gain.value = 0.5;
+        master.connect(lp).connect(audioCtx.destination);
+    }
+    return audioCtx;
+};
+// soft envelope: short fade-in (no pop), smooth fade-out
+const env = (g, peak, at, attack, dur) => {
+    g.gain.setValueAtTime(0.0001, at);
+    g.gain.exponentialRampToValueAtTime(peak, at + attack);
+    g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+};
+const noise = (dur, cutoff, peak, at) => {
+    const a = ac(), len = Math.floor(a.sampleRate * dur), buf = a.createBuffer(1, len, a.sampleRate), d = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+    const src = a.createBufferSource(), f = a.createBiquadFilter(), g = a.createGain();
+    src.buffer = buf; f.type = 'lowpass'; f.frequency.value = cutoff;
+    env(g, peak, at, 0.004, dur);
+    src.connect(f).connect(g).connect(master); src.start(at); src.stop(at + dur);
+};
+const tone = (from, to, dur, peak, at, type = 'sine', attack = 0.01) => {
+    const a = ac(), o = a.createOscillator(), g = a.createGain();
+    o.type = type; o.frequency.setValueAtTime(from, at); o.frequency.exponentialRampToValueAtTime(to, at + dur);
+    env(g, peak, at, attack, dur);
+    o.connect(g).connect(master); o.start(at); o.stop(at + dur);
+};
+const SFX = {
+    // muted "tock" of a plastic button
+    click: () => { const t = ac().currentTime; tone(420, 260, 0.06, 0.25, t, 'triangle', 0.003); },
+    // low, warm swell as the tube warms up
+    powerOn: () => { const t = ac().currentTime; tone(55, 62, 0.9, 0.35, t + 0.03, 'sine', 0.15); noise(0.35, 300, 0.12, t + 0.03); },
+    // gentle downward sigh
+    powerOff: () => { const t = ac().currentTime; tone(160, 45, 0.6, 0.22, t, 'sine', 0.02); },
+    // soft drive whirr with a few muffled head ticks
+    seek: () => {
+        const t = ac().currentTime;
+        tone(95, 85, 0.9, 0.12, t, 'triangle', 0.08);
+        for (let i = 0; i < 5; i++) noise(0.03, 700, 0.18, t + 0.12 + i * 0.13);
+    },
+};
+
+// One floppy. Dropping or clicking it flies it to the drive, lines it up above the slot and
+// slides it in (the part below the slot line is clipped away). When another disk replaces it,
+// or the monitor powers off, it slides back out and returns to its place on the desk.
+const FloppyDisk = ({ project, index, colors, inserted, onInsert, driveRef, overDrive }) => {
+    const ref = useRef(null);
+    const controls = useAnimationControls();
+    const x = useMotionValue(0), y = useMotionValue(0), z = useMotionValue(0);
+    // raised above the other disks while off its desk spot: flying, in the drive, or coming back
+    const setAway = on => z.set(on ? 60 : 0);
+    const wasInserted = useRef(false);
+    const dragged = useRef(false); // a drag release must not also count as a click
+
+    useEffect(() => {
+        const el = ref.current;
+        if (inserted && !wasInserted.current) {
+            wasInserted.current = true;
+            z.set(60);
+            const d = driveRef.current.getBoundingClientRect(), r = el.getBoundingClientRect();
+            const tx = x.get() + (d.left + d.width / 2) - (r.left + r.width / 2);
+            const ty = y.get() + (d.top + d.height / 2) - (r.top + el.offsetHeight); // bottom edge on the slot
+            controls.start({ x: tx, y: ty, rotate: 0, scale: 1, transition: { duration: 0.45, ease: [0.2, 0.8, 0.2, 1] } })
+                .then(() => controls.start({
+                    y: ty + el.offsetHeight, clipPath: 'inset(0% 0% 100% 0%)',
+                    transition: { duration: 0.35, ease: 'easeIn' },
+                }));
+        } else if (!inserted && wasInserted.current) {
+            wasInserted.current = false;
+            controls.start({ y: y.get() - el.offsetHeight, clipPath: 'inset(0% 0% 0% 0%)', transition: { duration: 0.3, ease: 'easeOut' } })
+                .then(() => controls.start({ x: 0, y: 0, transition: { type: 'spring', bounce: 0.3, duration: 0.7 } }))
+                .then(() => z.set(0));
+        }
+    }, [inserted, controls, driveRef, x, y, z]);
+
+    const home = () => controls.start({ x: 0, y: 0, transition: { type: 'spring', bounce: 0.35, duration: 0.6 } });
+
+    return (
+        <div className={`floppy-bay ${inserted ? 'empty' : ''}`}>
+            <motion.div
+                ref={ref}
+                className={`floppy-disk ${inserted ? 'inserted' : ''}`}
+                data-project={project.title}
+                role="button"
+                tabIndex={inserted ? -1 : 0}
+                aria-label={`Load ${project.title}`}
+                style={{ x, y, zIndex: z, clipPath: 'inset(0% 0% 0% 0%)' }}
+                animate={controls}
+                onTap={() => { if (!dragged.current) onInsert(index); }}
+                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onInsert(index); } }}
+                drag={!inserted}
+                dragMomentum={false}
+                dragElastic={0.9}
+                whileDrag={{ scale: 1.1, rotate: -6, cursor: 'grabbing' }}
+                onDragStart={() => { dragged.current = true; setAway(true); }}
+                onDrag={(e, info) => driveRef.current.classList.toggle('drop-ready', overDrive(info.point))}
+                onDragEnd={(e, info) => {
+                    driveRef.current.classList.remove('drop-ready');
+                    setTimeout(() => { dragged.current = false; }, 0);
+                    if (!(overDrive(info.point) && onInsert(index))) home().then(() => setAway(false));
+                }}
+                whileHover={!inserted ? { scale: 1.05, rotate: -2 } : {}}
+            >
+                <div className="floppy-plastic" style={{ backgroundColor: colors[index % colors.length] }}>
+                    <div className="floppy-shutter">
+                        <div className="shutter-door"></div>
+                    </div>
+                    <div className="floppy-arrow"></div>
+                    <div className="floppy-label-area">
+                        <div className="floppy-label-paper">
+                            <div className="label-stripe" style={{ backgroundColor: colors[(index + 1) % colors.length] }}></div>
+                            <span className="label-text">{project.title.split(' ').slice(0, 3).join(' ')}</span>
+                        </div>
+                    </div>
+                    <div className="floppy-notch"></div>
+                </div>
+            </motion.div>
+        </div>
+    );
+};
 
 const Projects = () => {
-    const [activeProject, setActiveProject] = useState(0);
+    const [activeProject, setActiveProject] = useState(null); // null = drive empty
     const [isBooting, setIsBooting] = useState(false);
     const driveRef = useRef(null);
     const monitorRef = useRef(null);
-    const powered = useInView(monitorRef, { once: true, amount: 0.4 });
+    const [sound, setSound] = useState(false);
+    const sfx = name => { if (sound) SFX[name](); };
+    const toggleSound = () => {
+        if (!sound) { ac().resume(); SFX.click(); }
+        setSound(v => !v);
+    };
+
+    // the glass highlight drifts opposite the cursor, so the screen reads as glass, not paint
+    useEffect(() => {
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        let raf = 0;
+        const onMove = e => {
+            cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(() => {
+                const el = monitorRef.current;
+                if (!el) return;
+                const r = el.getBoundingClientRect();
+                el.style.setProperty('--rx', ((e.clientX - (r.left + r.width / 2)) / innerWidth).toFixed(3));
+                el.style.setProperty('--ry', ((e.clientY - (r.top + r.height / 2)) / innerHeight).toFixed(3));
+            });
+        };
+        addEventListener('mousemove', onMove);
+        return () => { removeEventListener('mousemove', onMove); cancelAnimationFrame(raf); };
+    }, []);
+    // 'off' -> 'warming' (static + tube warm-up) -> 'on' -> 'shutting' (collapse to a dot) -> 'off'
+    const [power, setPower] = useState('off');
+    const [bootProject, setBootProject] = useState(0);
+    const powerTimer = useRef(null);
+    useEffect(() => () => clearTimeout(powerTimer.current), []);
+
+    const togglePower = () => {
+        clearTimeout(powerTimer.current);
+        if (power === 'off' || power === 'shutting') {
+            setBootProject(activeProject);
+            sfx('click'); sfx('powerOn');
+            setPower('warming');
+            powerTimer.current = setTimeout(() => setPower('on'), 900);
+        } else {
+            sfx('click'); sfx('powerOff');
+            setPower('shutting');
+            // picture collapses in 0.45s, then the afterglow dot fades; powering off also
+            // ejects the disk, so the next power-on asks for one again
+            powerTimer.current = setTimeout(() => { setPower('off'); setActiveProject(null); }, 1500);
+        }
+    };
+    const screenOn = power !== 'off';
 
     // is the pointer over the drive slot (with some slack so the drop isn't fiddly)?
     const overDrive = point => {
@@ -108,30 +281,6 @@ const Projects = () => {
             tools: ["Python", "Pandas", "Matplotlib", "Seaborn"]
         },
         {
-            title: "Car Price Prediction",
-            featured: false,
-            link: "https://github.com/Varn1t/Car-Price-Predictor",
-            linkIcon: "github",
-            points: [
-                "Data preprocessing pipeline using OneHotEncoder",
-                "Trained regression model with optimized R²",
-                "Deployed using Flask for live user input predictions"
-            ],
-            tools: ["Python", "Scikit-learn", "Flask", "Pickle", "Regression"]
-        },
-        {
-            title: "House Price Prediction",
-            featured: false,
-            link: "https://colab.research.google.com/drive/1a3sbD_7d2q17hwsYz-m2WkWgluH2xtKr?usp=sharing",
-            linkIcon: "colab",
-            points: [
-                "Built a regression-based ML pipeline with feature engineering",
-                "Achieved optimized R² performance using OneHotEncoding",
-                "Implemented robust model persistence using Pickle"
-            ],
-            tools: ["Python", "Scikit-learn", "Pickle", "Regression"]
-        },
-        {
             title: "Crime Record Management",
             featured: false,
             link: "https://github.com/Varn1t/Criminal-Record",
@@ -155,8 +304,10 @@ const Projects = () => {
         '#0f4c5c'  // Teal
     ];
 
+    // returns whether the disk was accepted, so a rejected drop can fly home
     const handleDiskClick = (index) => {
-        if (activeProject === index || isBooting) return;
+        if (activeProject === index || isBooting) return false;
+        sfx('seek');
         setIsBooting(true);
         setActiveProject(index);
 
@@ -164,6 +315,7 @@ const Projects = () => {
         setTimeout(() => {
             setIsBooting(false);
         }, 1500);
+        return true;
     };
 
     return (
@@ -184,88 +336,59 @@ const Projects = () => {
 
                     {/* LEFT: Floppy Disks Grid */}
                     <div className="floppy-desk-grid">
-                        {projectsData.map((project, index) => {
-                            const isInserted = activeProject === index;
-
-                            return (
-                                <motion.div
-                                    key={index}
-                                    className={`floppy-disk ${isInserted ? 'inserted' : ''}`}
-                                    data-project={project.title}
-                                    role="button"
-                                    tabIndex={0}
-                                    aria-label={`Load ${project.title}`}
-                                    onTap={() => handleDiskClick(index)}
-                                    onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleDiskClick(index); } }}
-                                    drag
-                                    dragSnapToOrigin
-                                    dragElastic={0.9}
-                                    whileDrag={{ scale: 1.1, rotate: -6, zIndex: 60, cursor: 'grabbing' }}
-                                    onDrag={(e, info) => driveRef.current.classList.toggle('drop-ready', overDrive(info.point))}
-                                    onDragEnd={(e, info) => {
-                                        driveRef.current.classList.remove('drop-ready');
-                                        if (overDrive(info.point)) handleDiskClick(index);
-                                    }}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true, margin: "-50px" }}
-                                    animate={isInserted ? {
-                                        scale: 0.95,
-                                        y: -5,
-                                        boxShadow: "0 20px 40px rgba(0,0,0,0.8)"
-                                    } : {
-                                        scale: 1,
-                                        y: 0,
-                                        boxShadow: "0 10px 15px rgba(0,0,0,0.5)"
-                                    }}
-                                    whileHover={!isInserted ? { scale: 1.05, y: -10, boxShadow: "0 15px 30px rgba(0,0,0,0.6)" } : {}}
-                                    transition={{ type: "spring", bounce: 0.4, duration: 0.6 }}
-                                >
-                                    <div className="floppy-plastic" style={{ backgroundColor: floppyColors[index % floppyColors.length] }}>
-                                        <div className="floppy-shutter">
-                                            <div className="shutter-door"></div>
-                                        </div>
-                                        <div className="floppy-arrow"></div>
-                                        <div className="floppy-label-area">
-                                            <div className="floppy-label-paper">
-                                                <div className="label-stripe" style={{ backgroundColor: floppyColors[(index + 1) % floppyColors.length] }}></div>
-                                                <span className="label-text">{project.title.split(' ').slice(0, 3).join(' ')}</span>
-                                            </div>
-                                        </div>
-                                        <div className="floppy-notch"></div>
-
-                                        {/* Active indicator overlay */}
-                                        {isInserted && (
-                                            <div className="active-disk-indicator">
-                                                <div className="indicator-light"></div>
-                                                <span>IN DRIVE</span>
-                                            </div>
-                                        )}
-                                    </div>
-                                </motion.div>
-                            );
-                        })}
+                        {projectsData.map((project, index) => (
+                            <FloppyDisk
+                                key={index}
+                                project={project}
+                                index={index}
+                                colors={floppyColors}
+                                inserted={activeProject === index}
+                                onInsert={handleDiskClick}
+                                driveRef={driveRef}
+                                overDrive={overDrive}
+                            />
+                        ))}
                     </div>
 
                     {/* RIGHT: CRT Terminal & Drive */}
                     <div className="crt-terminal-wrapper">
 
-                        <div className="floppy-drive" ref={driveRef} title="Drag a disk here">
-                            <div className="drive-slot"></div>
+                        <div className={`floppy-drive ${activeProject === null ? 'awaiting' : ''}`} ref={driveRef} title="Drag a disk here">
+                            <div className="drive-slot">
+                                {activeProject !== null && (
+                                    <div className="drive-disk-edge" style={{ backgroundColor: floppyColors[activeProject % floppyColors.length] }} />
+                                )}
+                            </div>
                             <div className={`drive-light ${isBooting ? 'reading' : 'idle'}`}></div>
                         </div>
 
                         <div className="crt-monitor" ref={monitorRef}>
-                            <div className="crt-glass">
+                            <div className={`crt-glass ${screenOn ? '' : 'is-off'}`}>
                                 <div className="scanlines"></div>
-                                {/* remounts per project so the power-on animation replays */}
-                                {powered && <div className="crt-content crt-power-on" key={activeProject}>
+                                <div className="crt-vignette" aria-hidden="true"></div>
+                                <div className="crt-reflection" aria-hidden="true"></div>
+                                {power === 'shutting' && <div className="crt-afterglow" aria-hidden="true"></div>}
+                                {power === 'warming' && <div className="crt-static" aria-hidden="true"></div>}
+                                {/* remounts per project; a project switch while on plays a short glitch */}
+                                {screenOn && <div
+                                    key={activeProject ?? 'empty'}
+                                    className={`crt-content ${power === 'warming' ? 'crt-power-on'
+                                        : power === 'shutting' ? 'crt-power-off'
+                                            : activeProject !== bootProject ? 'crt-switch' : ''}`}
+                                >
                                     {isBooting ? (
                                         <div className="boot-sequence">
                                             <p className="boot-1">{`> MOUNTING DISK...`}</p>
                                             <p className="boot-2">{`> READING SECTORS... [OK]`}</p>
                                             <p className="boot-3">{`> DECRYPTING PROJECT DATA...`}</p>
                                             <p className="boot-4 blink">_</p>
+                                        </div>
+                                    ) : activeProject === null ? (
+                                        <div className="no-disk">
+                                            <p className="no-disk-title">NO DISK IN DRIVE A:</p>
+                                            <p>&gt; Drag a floppy into the drive above</p>
+                                            <p>&gt; or click one to load it</p>
+                                            <p className="no-disk-arrow blink" aria-hidden="true">▲</p>
                                         </div>
                                     ) : (
                                         <motion.div
@@ -275,7 +398,7 @@ const Projects = () => {
                                             transition={{ duration: 0.1 }} // Instant CRT pop-in
                                         >
                                             <div className="terminal-header">
-                                                <span>A:\&gt; RUN {projectsData[activeProject].title.toUpperCase().replace(/\s+/g, '_').substring(0, 10)}.EXE</span>
+                                                <span>A:\&gt; RUN {projectsData[activeProject].title.split(/[:\s-]/)[0].toUpperCase().slice(0, 8)}.EXE</span>
                                             </div>
 
                                             <h3 className="term-title">
@@ -307,8 +430,36 @@ const Projects = () => {
                                     )}
                                 </div>}
                             </div>
+                            <button
+                                className={`crt-sound ${sound ? 'on' : ''}`}
+                                onClick={toggleSound}
+                                aria-pressed={sound}
+                                aria-label={sound ? 'Mute monitor sounds' : 'Turn on monitor sounds'}
+                            >
+                                {sound ? '♪ SOUND ON' : '♪ SOUND OFF'}
+                            </button>
+                            <span className="crt-badge" aria-hidden="true">VK-2000</span>
+                            <button
+                                className={`crt-power ${screenOn ? 'on' : ''}`}
+                                onClick={togglePower}
+                                aria-pressed={screenOn}
+                                aria-label={screenOn ? 'Turn monitor off' : 'Turn monitor on'}
+                            >
+                                <span className="crt-power-led" aria-hidden="true"></span>
+                                <span aria-hidden="true">⏻</span>
+                                <span className="crt-power-label" aria-hidden="true">POWER</span>
+                            </button>
                             <div className="monitor-base"></div>
                         </div>
+
+                        {/* handwritten hint, only while the monitor is off */}
+                        {power === 'off' && (
+                            <div className="power-note" aria-hidden="true">
+                                <span className="power-note-tape"></span>
+                                <p>Press <b>POWER</b> to switch me on!</p>
+                                <p className="power-note-sub">(bottom-right of the screen)</p>
+                            </div>
+                        )}
                     </div>
 
                 </div>
