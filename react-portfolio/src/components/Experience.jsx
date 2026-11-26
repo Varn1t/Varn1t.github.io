@@ -36,7 +36,7 @@ const LogStream = ({ logs, active }) => {
     return (
         <div className="exp-log-stream">
             {!active && count === 0 && (
-                <div className="exp-log-idle">Hover to run agent...</div>
+                <div className="exp-log-idle">Hover or tap to run agent...</div>
             )}
             {logs.slice(0, count).map((line, i) => (
                 <div key={i} className="exp-log-line">
@@ -138,6 +138,8 @@ const SubAgentCard = ({ agent }) => {
             whileHover={{ y: -4, scale: 1.02 }}
             onHoverStart={() => setHovered(true)}
             onHoverEnd={() => setHovered(false)}
+            // touch screens have no hover: a tap toggles the agent instead
+            onPointerUp={e => { if (e.pointerType !== 'mouse') setHovered(h => !h); }}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -216,7 +218,7 @@ const Experience = () => (
             </div>
 
             <motion.div className="exp-tools-label" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.45 }}>
-                <ToolSvg /> Tool Calls &amp; Sub-Agents <span className="exp-tools-hint">(hover cards to run)</span>
+                <ToolSvg /> Tool Calls &amp; Sub-Agents <span className="exp-tools-hint">(hover or tap cards to run)</span>
             </motion.div>
 
             <div className="exp-subagent-grid">

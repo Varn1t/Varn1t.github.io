@@ -18,27 +18,30 @@ const Swing = ({ seed, children }) => {
         };
         const step = t => {
             if (!dragging) {
-                const rest = reduce ? 0 : 2 * Math.sin(t / 900 + phase); // idle sway, degrees
-                vel += (-(angle - rest) * 0.045) - vel * 0.06; // spring + damping
+                const rest = reduce ? 0 : 1.2 * Math.sin(t / 1100 + phase); // idle sway, degrees
+                vel += (-(angle - rest) * 0.05) - vel * 0.12; // spring + heavier damping
                 angle += vel;
             }
             el.style.transform = `rotate(${angle.toFixed(2)}deg)`;
             raf = requestAnimationFrame(step);
         };
-        const onDown = e => { start = { x: e.clientX, y: e.clientY, id: e.pointerId }; };
+        const onDown = e => { start = { x: e.clientX, y: e.clientY, id: e.pointerId, touch: e.pointerType !== 'mouse' }; };
         const onMove = e => {
-            if (start && !dragging && Math.hypot(e.clientX - start.x, e.clientY - start.y) > 6) {
+            const dx = start ? e.clientX - start.x : 0, dy = start ? e.clientY - start.y : 0;
+            // on touch, a mostly-vertical move is the page scrolling: leave the badge alone
+            const sideways = Math.abs(dx) > Math.abs(dy) * 1.5;
+            if (start && !dragging && Math.hypot(dx, dy) > 8 && (!start.touch || sideways)) {
                 dragging = true; // only now, so plain clicks on links still work
                 el.setPointerCapture(start.id);
                 el.classList.add('swinging');
             }
             if (dragging) {
                 const p = pivot();
-                const next = Math.max(-70, Math.min(70, (Math.atan2(p.x - e.clientX, e.clientY - p.y) * 180) / Math.PI));
-                vel = next - angle;
+                const next = Math.max(-45, Math.min(45, (Math.atan2(p.x - e.clientX, e.clientY - p.y) * 180) / Math.PI));
+                vel = Math.max(-4, Math.min(4, next - angle)); // cap the fling
                 angle = next;
-            } else if (!start && !reduce) {
-                vel += e.movementX * 0.04; // brushing past
+            } else if (!start && !reduce && e.pointerType === 'mouse') {
+                vel += Math.max(-0.6, Math.min(0.6, e.movementX * 0.02)); // gentle brush-past nudge
             }
         };
         const onUp = () => {

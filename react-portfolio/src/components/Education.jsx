@@ -15,7 +15,10 @@ const BranchGraph = ({ notebookRef }) => {
             // offsets, not rects: the commits animate in with a transform
             const ys = [...nb.querySelectorAll('.commit-dot')].map(d =>
                 d.offsetParent.offsetTop + d.offsetTop + d.offsetHeight / 2);
-            setGeo({ ys, h: nb.offsetHeight });
+            // branch lane sits between the main line and the cards, whatever the gutter width
+            const commit = nb.querySelector('.git-commit');
+            const pad = commit ? parseFloat(getComputedStyle(commit).paddingLeft) : 80;
+            setGeo({ ys, h: nb.offsetHeight, lane: 32 + (pad - 32) * 0.55 });
         };
         measure();
         const ro = new ResizeObserver(measure);
@@ -45,7 +48,7 @@ const BranchGraph = ({ notebookRef }) => {
     }, [geo, notebookRef]);
 
     if (!geo || geo.ys.length < 2) return null;
-    const X = 32, LANE = 58, R = 30;
+    const X = 32, LANE = geo.lane, R = 30;
     const { ys } = geo;
     const segs = [{ d: `M${X} ${ys[0]} L${X} ${ys.at(-1)}`, span: [ys[0], ys.at(-1)], cls: 'graph-main' }];
     for (let i = 0; i < ys.length - 1; i++) {

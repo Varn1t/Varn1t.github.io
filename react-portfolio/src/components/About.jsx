@@ -342,6 +342,7 @@ const About = ({ onOpenResume }) => {
                                     <button className={panel === 'problems' ? 'active' : ''} onClick={() => setPanel(p => p === 'problems' ? null : 'problems')}>
                                         PROBLEMS <span className="problems-badge">1</span>
                                     </button>
+                                    <button className="run-btn run-btn-panel" onClick={runHobbies}>▶ Run hobbies.py</button>
                                     <span className="ide-panel-status">0 errors · 1 warning</span>
                                 </div>
                                 {panel === 'terminal' && (

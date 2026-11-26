@@ -255,7 +255,7 @@ const Skills = () => {
                                     >
                                         <ScanIcon />
                                         <p className="scan-text">AWAITING TARGET LOCK</p>
-                                        <p className="scan-sub">Hover over a radar blip to analyze skill capability.</p>
+                                        <p className="scan-sub">Hover or tap a radar blip to see where it was used.</p>
                                     </motion.div>
                                 )}
                             </AnimatePresence>

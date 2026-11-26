@@ -151,8 +151,10 @@ const Projects = () => {
                 const el = monitorRef.current;
                 if (!el) return;
                 const r = el.getBoundingClientRect();
-                el.style.setProperty('--rx', ((e.clientX - (r.left + r.width / 2)) / innerWidth).toFixed(3));
-                el.style.setProperty('--ry', ((e.clientY - (r.top + r.height / 2)) / innerHeight).toFixed(3));
+                // clamped so the highlight never slides far enough to show its edge
+                const clamp = v => Math.max(-0.5, Math.min(0.5, v)).toFixed(3);
+                el.style.setProperty('--rx', clamp((e.clientX - (r.left + r.width / 2)) / innerWidth));
+                el.style.setProperty('--ry', clamp((e.clientY - (r.top + r.height / 2)) / innerHeight));
             });
         };
         addEventListener('mousemove', onMove);

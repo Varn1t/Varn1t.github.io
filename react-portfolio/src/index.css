@@ -576,7 +576,9 @@ a {
 .line-content {
   color: #e2e8f0;
   white-space: pre-wrap;
-  word-break: break-all;
+  /* wrap at word boundaries; only break a word when it can't fit on a line at all */
+  word-break: normal;
+  overflow-wrap: anywhere;
 }
 
 /* Tokens */
@@ -4093,3 +4095,44 @@ a {
 @keyframes power-note-in { from { opacity: 0; transform: rotate(-8deg) translateY(10px); } to { opacity: 1; transform: rotate(-2deg); } }
 @keyframes power-note-nudge { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(-1deg) translateY(-3px); } }
 .power-note-sub { font-size: 1rem; opacity: 0.75; }
+
+/* — Mobile fixes — */
+@media (max-width: 999px) {
+  /* the power note sits in normal flow above the drive instead of floating over it */
+  .power-note { position: relative; top: auto; right: auto; order: -1; margin: 0.5rem auto 0.25rem; transform: rotate(-2deg); }
+}
+@media (max-width: 640px) {
+  .hero-center .hero-title { font-size: clamp(2.8rem, 13vw, 3.6rem); letter-spacing: -2px; }
+  /* no room for the file name next to the command button, and phones have no Ctrl+K */
+  #about .window-title { display: none; }
+  .cmdk-trigger kbd { display: none; }
+  /* too many blips for flashing names on a small radar; names still show on tap */
+  .radar-blip.sweep-ping:not(.hovered) .blip-label { animation: none; }
+}
+
+
+/* — Hero name: calmer white, solid purple surname — */
+.hero-center .hero-title { color: #e6e1f7; }
+.hero-center .hero-title-accent {
+  background: none; -webkit-background-clip: border-box; background-clip: border-box;
+  -webkit-text-fill-color: currentColor; color: var(--accent-bright);
+}
+
+/* — About: panel Run button (phones) — */
+.run-btn-panel { display: none; }
+
+/* — Projects desk on phones — */
+@media (max-width: 999px) {
+  .floppy-desk-grid { justify-content: center; justify-items: center; gap: 1rem 0.75rem; }
+  .floppy-bay { width: 100px; height: 100px; }
+  .projects-desktop { padding: 1.25rem 0.75rem; }
+  .power-note { width: 200px; min-height: 0; padding: 1rem 0.9rem 0.7rem; font-size: 1.2rem; }
+  .power-note-sub { display: none; }
+}
+@media (max-width: 640px) {
+  .run-btn-panel { display: inline-block; margin-left: auto; border-left: none; padding: 0.4rem 0.6rem; }
+  .ide-panel-status { display: none; }
+  .line-num { width: 1.8rem; padding-right: 0.6rem; }
+  .ide-code { font-size: 0.82rem; }
+  .ide-line { padding: 0 0.75rem 0 0.25rem; }
+}
