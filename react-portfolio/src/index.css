@@ -2217,8 +2217,11 @@ a {
 ═══════════════════════════════════════════════════════════════ */
 .radar-section {
   position: relative;
-  /* translucent so the background network shows through, still darker than the page */
-  background: radial-gradient(circle at center, rgba(10, 0, 16, 0.5) 0%, rgba(5, 0, 8, 0.6) 100%);
+  /* same as the other sections: page colour + network show through, with the faint grid */
+  background-image:
+    linear-gradient(rgba(168, 85, 247, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168, 85, 247, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
   overflow: hidden;
 }
 
