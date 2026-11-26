@@ -47,6 +47,69 @@ const LogStream = ({ logs, active }) => {
     );
 };
 
+const TIMELINE = [
+    { cls: 'tt-cmd', text: '$ git log --experience --oneline' },
+    { cls: 'tt-head', text: '* 2026-08 → now   AIML Intern @ ITG Telematics Pvt. Ltd.  (HEAD)' },
+    { cls: 'tt-sub', text: '    ↳ computer vision · document AI · LLM agents · FastAPI deploys' },
+    { cls: 'tt-row', text: '* 2025 → 2026-05  Mentor @ InternWare' },
+    { cls: 'tt-row', text: '* 2023 → 2024     Executive @ InternWare' },
+    { cls: 'tt-cmd', text: '$ status' },
+    { cls: 'tt-ok', text: '● active · open to opportunities' },
+];
+const TIMELINE_START = TIMELINE.map((_, i) => TIMELINE.slice(0, i).reduce((n, l) => n + l.text.length, 0));
+const TIMELINE_CHARS = TIMELINE_START.at(-1) + TIMELINE.at(-1).text.length;
+
+// Types the timeline out as the terminal scrolls up through the viewport.
+const TypingTimeline = () => {
+    const ref = useRef(null);
+    const [shown, setShown] = useState(
+        matchMedia('(prefers-reduced-motion: reduce)').matches ? TIMELINE_CHARS : 0
+    );
+
+    useEffect(() => {
+        if (shown === TIMELINE_CHARS) return;
+        let raf = 0;
+        const onScroll = () => {
+            cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(() => {
+                const top = ref.current.getBoundingClientRect().top;
+                // starts when the top enters at 90% of the viewport, done by 35%
+                const p = Math.min(1, Math.max(0, (innerHeight * 0.9 - top) / (innerHeight * 0.55)));
+                setShown(Math.round(p * TIMELINE_CHARS));
+            });
+        };
+        onScroll();
+        addEventListener('scroll', onScroll, { passive: true });
+        return () => { removeEventListener('scroll', onScroll); cancelAnimationFrame(raf); };
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    return (
+        <div className="ide-window typing-timeline" ref={ref} aria-label="Experience timeline">
+            <div className="ide-header">
+                <div className="window-controls">
+                    <span className="dot red"></span>
+                    <span className="dot yellow"></span>
+                    <span className="dot green"></span>
+                </div>
+                <span className="window-title">varnit@portfolio: ~/experience</span>
+            </div>
+            <pre className="tt-body">
+                {TIMELINE.map((line, i) => {
+                    const take = Math.min(line.text.length, Math.max(0, shown - TIMELINE_START[i]));
+                    if (take === 0 && i > 0) return null;
+                    const typing = take < line.text.length || shown === TIMELINE_CHARS && i === TIMELINE.length - 1;
+                    return (
+                        <div key={i} className={line.cls}>
+                            {line.text.slice(0, take)}
+                            {typing && <span className="tt-caret blink">▌</span>}
+                        </div>
+                    );
+                })}
+            </pre>
+        </div>
+    );
+};
+
 const Connector = ({ delay = 0 }) => (
     <div className="exp-connector">
         <div className="exp-connector-line">
@@ -167,6 +230,8 @@ const Experience = () => (
                 <span className="exp-meta-sep">·</span>
                 <span className="exp-meta-item" style={{ color: '#34d399' }}>● Status: Active</span>
             </motion.div>
+
+            <TypingTimeline />
         </div>
     </section>
 );

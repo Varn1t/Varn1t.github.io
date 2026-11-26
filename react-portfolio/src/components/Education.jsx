@@ -1,7 +1,87 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
+const BRANCHES = ['dev/btech', 'feature/high-school'];
+
+// Draws the git graph in the gutter as you scroll: the main line runs down through every
+// commit, and each older commit branches out and merges back into the one above it.
+const BranchGraph = ({ notebookRef }) => {
+    const [geo, setGeo] = useState(null);
+    const paths = useRef([]);
+
+    useEffect(() => {
+        const nb = notebookRef.current;
+        const measure = () => {
+            // offsets, not rects: the commits animate in with a transform
+            const ys = [...nb.querySelectorAll('.commit-dot')].map(d =>
+                d.offsetParent.offsetTop + d.offsetTop + d.offsetHeight / 2);
+            setGeo({ ys, h: nb.offsetHeight });
+        };
+        measure();
+        const ro = new ResizeObserver(measure);
+        ro.observe(nb);
+        return () => ro.disconnect();
+    }, [notebookRef]);
+
+    useEffect(() => {
+        if (!geo) return;
+        const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let raf = 0;
+        const update = () => {
+            // how far down the notebook the "pen" has reached
+            const pen = innerHeight * 0.7 - notebookRef.current.getBoundingClientRect().top;
+            paths.current.forEach((el, i) => {
+                if (!el) return;
+                const [a, b] = el.dataset.span.split(',').map(Number);
+                const p = reduce ? 1 : Math.min(1, Math.max(0, (pen - a) / (b - a)));
+                el.style.strokeDashoffset = 1 - p;
+                el.parentNode.querySelectorAll(`[data-for="${i}"]`).forEach(m => { m.style.opacity = p >= 1 ? 1 : 0; });
+            });
+        };
+        const onScroll = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(update); };
+        update();
+        addEventListener('scroll', onScroll, { passive: true });
+        return () => { removeEventListener('scroll', onScroll); cancelAnimationFrame(raf); };
+    }, [geo, notebookRef]);
+
+    if (!geo || geo.ys.length < 2) return null;
+    const X = 32, LANE = 58, R = 30;
+    const { ys } = geo;
+    const segs = [{ d: `M${X} ${ys[0]} L${X} ${ys.at(-1)}`, span: [ys[0], ys.at(-1)], cls: 'graph-main' }];
+    for (let i = 0; i < ys.length - 1; i++) {
+        const a = ys[i], b = ys[i + 1];
+        segs.push({
+            d: `M${X} ${a} C${X} ${a + R}, ${LANE} ${a + R * 0.4}, ${LANE} ${a + R} L${LANE} ${b - R} C${LANE} ${b - R * 0.4}, ${X} ${b - R}, ${X} ${b}`,
+            span: [a, b], cls: 'graph-branch', label: BRANCHES[i], a, b,
+        });
+    }
+
+    return (
+        <svg className="branch-graph" width="90" height={geo.h} aria-hidden="true">
+            {segs.map((sg, i) => (
+                <g key={i}>
+                    <path
+                        ref={el => { paths.current[i] = el; }}
+                        d={sg.d}
+                        className={sg.cls}
+                        pathLength="1"
+                        data-span={sg.span.join(',')}
+                    />
+                    {sg.label && (
+                        <>
+                            <circle data-for={i} cx={X} cy={sg.a} r="5" className="graph-merge" />
+                            <text data-for={i} x={LANE + 6} y={(sg.a + sg.b) / 2} className="graph-label"
+                                transform={`rotate(-90 ${LANE + 6} ${(sg.a + sg.b) / 2})`}>{sg.label}</text>
+                        </>
+                    )}
+                </g>
+            ))}
+        </svg>
+    );
+};
+
 const Education = () => {
+    const notebookRef = useRef(null);
     return (
         <section className="section notebook-section" id="education">
             <div className="container">
@@ -10,9 +90,10 @@ const Education = () => {
                     <div className="section-line"></div>
                 </div>
 
-                <div className="git-notebook">
+                <div className="git-notebook" ref={notebookRef}>
                     {/* The main Git branch line */}
                     <div className="git-line"></div>
+                    <BranchGraph notebookRef={notebookRef} />
 
                     {/* Commit 1: B.Tech */}
                     <motion.div

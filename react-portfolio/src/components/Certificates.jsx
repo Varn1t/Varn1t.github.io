@@ -1,5 +1,66 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+
+// A badge hanging from its strap: a damped pendulum you can grab and fling.
+// Brushing the cursor across it nudges it; at rest it keeps a faint idle sway.
+const Swing = ({ seed, children }) => {
+    const ref = useRef(null);
+
+    useEffect(() => {
+        const el = ref.current;
+        const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let angle = 0, vel = 0, dragging = false, start = null, raf;
+        const phase = seed * 1.7;
+
+        const pivot = () => {
+            const r = el.getBoundingClientRect();
+            return { x: r.left + r.width / 2, y: r.top };
+        };
+        const step = t => {
+            if (!dragging) {
+                const rest = reduce ? 0 : 2 * Math.sin(t / 900 + phase); // idle sway, degrees
+                vel += (-(angle - rest) * 0.045) - vel * 0.06; // spring + damping
+                angle += vel;
+            }
+            el.style.transform = `rotate(${angle.toFixed(2)}deg)`;
+            raf = requestAnimationFrame(step);
+        };
+        const onDown = e => { start = { x: e.clientX, y: e.clientY, id: e.pointerId }; };
+        const onMove = e => {
+            if (start && !dragging && Math.hypot(e.clientX - start.x, e.clientY - start.y) > 6) {
+                dragging = true; // only now, so plain clicks on links still work
+                el.setPointerCapture(start.id);
+                el.classList.add('swinging');
+            }
+            if (dragging) {
+                const p = pivot();
+                const next = Math.max(-70, Math.min(70, (Math.atan2(p.x - e.clientX, e.clientY - p.y) * 180) / Math.PI));
+                vel = next - angle;
+                angle = next;
+            } else if (!start && !reduce) {
+                vel += e.movementX * 0.04; // brushing past
+            }
+        };
+        const onUp = () => {
+            start = null;
+            if (dragging) { dragging = false; el.classList.remove('swinging'); }
+        };
+        el.addEventListener('pointerdown', onDown);
+        el.addEventListener('pointermove', onMove);
+        el.addEventListener('pointerup', onUp);
+        el.addEventListener('pointercancel', onUp);
+        raf = requestAnimationFrame(step);
+        return () => {
+            cancelAnimationFrame(raf);
+            el.removeEventListener('pointerdown', onDown);
+            el.removeEventListener('pointermove', onMove);
+            el.removeEventListener('pointerup', onUp);
+            el.removeEventListener('pointercancel', onUp);
+        };
+    }, [seed]);
+
+    return <div className="swing" ref={ref}>{children}</div>;
+};
 
 const Certificates = () => {
     const certsData = [
@@ -36,9 +97,6 @@ const Certificates = () => {
 
                 <div className="lanyard-grid">
                     {certsData.map((cert, index) => {
-                        // Generate random but deterministic sway parameters
-                        const duration = 4 + (index % 3);
-                        const rotation = index % 2 === 0 ? [3, -3, 3] : [-2, 2, -2];
                         const delay = index * 0.2;
 
                         return (
@@ -48,15 +106,13 @@ const Certificates = () => {
                                 initial={{ opacity: 0, y: -50 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, margin: "-100px" }}
-                                style={{ transformOrigin: "top center" }}
-                                animate={{ rotate: rotation }}
                                 transition={{
                                     opacity: { duration: 0.5, delay },
-                                    y: { duration: 0.8, type: "spring", bounce: 0.4, delay },
-                                    rotate: { repeat: Infinity, duration, ease: "easeInOut", delay }
+                                    y: { duration: 0.8, type: "spring", bounce: 0.4, delay }
                                 }}
-                                whileHover={{ rotate: 0, scale: 1.05, zIndex: 10, transition: { duration: 0.2 } }}
+                                whileHover={{ zIndex: 10 }}
                             >
+                                <Swing seed={index}>
                                 <div className="lanyard-strap"></div>
                                 <div className="lanyard-clip"></div>
 
@@ -84,6 +140,7 @@ const Certificates = () => {
                                     {/* Glass glare effect */}
                                     <div className="badge-glare"></div>
                                 </div>
+                                </Swing>
                             </motion.div>
                         );
                     })}
@@ -94,15 +151,13 @@ const Certificates = () => {
                         initial={{ opacity: 0, y: -50 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-100px" }}
-                        style={{ transformOrigin: "top center" }}
-                        animate={{ rotate: [-1, 1, -1] }}
                         transition={{
                             opacity: { duration: 0.5, delay: 0.8 },
-                            y: { duration: 0.8, type: "spring", bounce: 0.4, delay: 0.8 },
-                            rotate: { repeat: Infinity, duration: 6, ease: "easeInOut" }
+                            y: { duration: 0.8, type: "spring", bounce: 0.4, delay: 0.8 }
                         }}
-                        whileHover={{ rotate: 0, scale: 1.02, zIndex: 10 }}
+                        whileHover={{ zIndex: 10 }}
                     >
+                        <Swing seed={certsData.length}>
                         <div className="lanyard-strap vip-strap"></div>
                         <div className="lanyard-clip vip-clip"></div>
 
@@ -125,6 +180,7 @@ const Certificates = () => {
                             </div>
                             <div className="badge-glare"></div>
                         </div>
+                        </Swing>
                     </motion.div>
                 </div>
             </div>

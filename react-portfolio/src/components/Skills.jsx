@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Skills = () => {
@@ -42,6 +42,40 @@ const Skills = () => {
     ];
 
     const [hoveredSkill, setHoveredSkill] = useState(null);
+    const [filter, setFilter] = useState(null); // category name or null
+    const sweepRef = useRef(null);
+    const blipRefs = useRef([]);
+
+    // Ping each blip as the sweep's leading edge passes over it.
+    useEffect(() => {
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        let raf, prev = null;
+        // blip angle is maths-style (counter-clockwise, y up); convert to screen clockwise degrees
+        const screenAngle = radarSkills.map(sk => (360 - sk.angle) % 360);
+        const tick = () => {
+            const m = getComputedStyle(sweepRef.current).transform;
+            if (m && m !== 'none') {
+                const [a, b] = m.slice(7, -1).split(',').map(Number);
+                // leading edge of the sweep wedge points straight down (90deg) at rotation 0
+                const edge = ((Math.atan2(b, a) * 180) / Math.PI + 90 + 360) % 360;
+                if (prev !== null) {
+                    screenAngle.forEach((ang, i) => {
+                        const passed = prev <= edge ? ang > prev && ang <= edge : ang > prev || ang <= edge;
+                        const el = blipRefs.current[i];
+                        if (passed && el && !el.classList.contains('dimmed')) {
+                            el.classList.remove('sweep-ping');
+                            void el.offsetWidth; // restart the CSS animation
+                            el.classList.add('sweep-ping');
+                        }
+                    });
+                }
+                prev = edge;
+            }
+            raf = requestAnimationFrame(tick);
+        };
+        raf = requestAnimationFrame(tick);
+        return () => cancelAnimationFrame(raf);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const getCoordinates = (angleDegrees, proficiency) => {
         // Center is expert (100%), Edge is beginner (0%)
@@ -59,6 +93,17 @@ const Skills = () => {
         if (angle >= 90 && angle < 180) return "ML & AI Tools";
         if (angle >= 180 && angle < 270) return "Web Development";
         return "Dev Environment";
+    };
+
+    const CATEGORIES = ['Core Languages', 'ML & AI Tools', 'Web Development', 'Dev Environment'];
+    const toggle = cat => setFilter(f => (f === cat ? null : cat));
+
+    // clicking empty radar space filters to the quadrant you clicked
+    const onBoardClick = e => {
+        if (e.target.closest('.radar-blip')) return;
+        const r = e.currentTarget.getBoundingClientRect();
+        const dx = e.clientX - (r.left + r.width / 2), dy = (r.top + r.height / 2) - e.clientY;
+        toggle(getCategory(((Math.atan2(dy, dx) * 180) / Math.PI + 360) % 360));
     };
 
     return (
@@ -84,8 +129,21 @@ const Skills = () => {
                 >
 
                     {/* The Sonar Screen */}
-                    <div className="radar-board">
-                        <div className="radar-sweep"></div>
+                    <div className="radar-column">
+                    <div className="radar-filters" role="group" aria-label="Filter skills by category">
+                        {CATEGORIES.map(cat => (
+                            <button
+                                key={cat}
+                                className={`radar-filter ${filter === cat ? 'active' : ''}`}
+                                aria-pressed={filter === cat}
+                                onClick={() => toggle(cat)}
+                            >
+                                {cat}
+                            </button>
+                        ))}
+                    </div>
+                    <div className="radar-board" onClick={onBoardClick} title="Click a quadrant to filter">
+                        <div className="radar-sweep" ref={sweepRef}></div>
 
                         {/* Concentric rings denoting expertise */}
                         <div className="radar-ring r-1"></div>
@@ -100,10 +158,13 @@ const Skills = () => {
                         {radarSkills.map((skill, idx) => {
                             const coords = getCoordinates(skill.angle, skill.prof);
                             const isHovered = hoveredSkill === idx;
+                            const dimmed = filter && getCategory(skill.angle) !== filter;
                             return (
                                 <div
                                     key={idx}
-                                    className={`radar-blip ${isHovered ? 'hovered' : ''}`}
+                                    ref={el => { blipRefs.current[idx] = el; }}
+                                    className={`radar-blip ${isHovered ? 'hovered' : ''} ${dimmed ? 'dimmed' : ''}`}
+                                    data-projects={skill.projects.join('|') || undefined}
                                     style={{
                                         left: coords.left,
                                         top: coords.top,
@@ -119,6 +180,7 @@ const Skills = () => {
                                 </div>
                             );
                         })}
+                    </div>
                     </div>
 
                     {/* HUD Info Panel */}

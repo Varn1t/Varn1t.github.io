@@ -1,9 +1,19 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { motion, useInView } from 'framer-motion';
 
 const Projects = () => {
     const [activeProject, setActiveProject] = useState(0);
     const [isBooting, setIsBooting] = useState(false);
+    const driveRef = useRef(null);
+    const monitorRef = useRef(null);
+    const powered = useInView(monitorRef, { once: true, amount: 0.4 });
+
+    // is the pointer over the drive slot (with some slack so the drop isn't fiddly)?
+    const overDrive = point => {
+        const r = driveRef.current.getBoundingClientRect();
+        const x = point.x - scrollX, y = point.y - scrollY;
+        return x > r.left - 40 && x < r.right + 40 && y > r.top - 50 && y < r.bottom + 50;
+    };
 
     const projectsData = [
         {
@@ -181,7 +191,21 @@ const Projects = () => {
                                 <motion.div
                                     key={index}
                                     className={`floppy-disk ${isInserted ? 'inserted' : ''}`}
-                                    onClick={() => handleDiskClick(index)}
+                                    data-project={project.title}
+                                    role="button"
+                                    tabIndex={0}
+                                    aria-label={`Load ${project.title}`}
+                                    onTap={() => handleDiskClick(index)}
+                                    onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleDiskClick(index); } }}
+                                    drag
+                                    dragSnapToOrigin
+                                    dragElastic={0.9}
+                                    whileDrag={{ scale: 1.1, rotate: -6, zIndex: 60, cursor: 'grabbing' }}
+                                    onDrag={(e, info) => driveRef.current.classList.toggle('drop-ready', overDrive(info.point))}
+                                    onDragEnd={(e, info) => {
+                                        driveRef.current.classList.remove('drop-ready');
+                                        if (overDrive(info.point)) handleDiskClick(index);
+                                    }}
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true, margin: "-50px" }}
@@ -226,15 +250,16 @@ const Projects = () => {
                     {/* RIGHT: CRT Terminal & Drive */}
                     <div className="crt-terminal-wrapper">
 
-                        <div className="floppy-drive">
+                        <div className="floppy-drive" ref={driveRef} title="Drag a disk here">
                             <div className="drive-slot"></div>
                             <div className={`drive-light ${isBooting ? 'reading' : 'idle'}`}></div>
                         </div>
 
-                        <div className="crt-monitor">
+                        <div className="crt-monitor" ref={monitorRef}>
                             <div className="crt-glass">
                                 <div className="scanlines"></div>
-                                <div className="crt-content">
+                                {/* remounts per project so the power-on animation replays */}
+                                {powered && <div className="crt-content crt-power-on" key={activeProject}>
                                     {isBooting ? (
                                         <div className="boot-sequence">
                                             <p className="boot-1">{`> MOUNTING DISK...`}</p>
@@ -280,7 +305,7 @@ const Projects = () => {
                                             <div className="term-cursor"><span className="blink">_</span></div>
                                         </motion.div>
                                     )}
-                                </div>
+                                </div>}
                             </div>
                             <div className="monitor-base"></div>
                         </div>

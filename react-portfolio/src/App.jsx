@@ -10,6 +10,7 @@ import Certificates from './components/Certificates';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ResumeModal from './components/ResumeModal';
+import ScrollFX from './components/ScrollFX';
 
 function App() {
   const [isResumeOpen, setIsResumeOpen] = useState(false);
@@ -40,7 +41,7 @@ function App() {
     <>
       <Navbar onOpenResume={() => setIsResumeOpen(true)} />
       <Hero onOpenResume={() => setIsResumeOpen(true)} />
-      <About />
+      <About onOpenResume={() => setIsResumeOpen(true)} />
       <Education />
       <Experience />
       <Skills />
@@ -48,7 +49,8 @@ function App() {
       <Certificates />
       <Contact />
       <Footer />
-      
+      <ScrollFX />
+
       <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
     </>
   );
